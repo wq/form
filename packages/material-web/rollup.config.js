@@ -2,8 +2,7 @@ import babel from '@rollup/plugin-babel';
 
 export default [
     {
-        input:
-            'packages/material/node_modules/material-ui-dropzone/src/index.js',
+        input: 'node_modules/material-ui-dropzone/src/index.js',
         plugins: [
             babel({
                 plugins: [
@@ -21,7 +20,7 @@ export default [
         ],
         external: ['react', 'prop-types', 'clsx', 'react-dropzone'],
         output: {
-            file: 'packages/material/src/vendor/material-ui-dropzone.js'
+            file: 'packages/material-web/src/vendor/material-ui-dropzone.js'
         }
     }
 ];
