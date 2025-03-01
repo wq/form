@@ -1,5 +1,5 @@
-import material from "../index.js";
+import { AutoForm } from "../index.js";
 
 test("it loads", () => {
-    expect(material.name).toBe("material");
+    expect(AutoForm.displayName).toBe("AutoForm:wq");
 });

@@ -1,8 +1,9 @@
 import React from "react";
+import { withWQ } from "@wq/react";
 import { useField } from "formik";
 import { FormHelperText } from "@mui/material";
 
-export default function FormError(props) {
+function FormError(props) {
     const [, { error }] = useField("__other__");
     if (!error) {
         return null;
@@ -13,3 +14,5 @@ export default function FormError(props) {
         </FormHelperText>
     );
 }
+
+export default withWQ(FormError);

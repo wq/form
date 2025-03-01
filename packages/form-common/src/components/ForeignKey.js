@@ -1,10 +1,11 @@
 import React from "react";
-import { useModel, useUnsynced, useInputComponents } from "../hooks.js";
+import { useComponents, withWQ, createFallbackComponent } from "@wq/react";
 import { useFormikContext, getIn } from "formik";
 
-function useChoices(modelName, group_by) {
-    const records = useModel(modelName),
-        unsyncedItems = useUnsynced(modelName),
+export function useChoices(modelName, group_by) {
+    const { useModel, useUnsynced } = useComponents(),
+        records = useModel(modelName) || [],
+        unsyncedItems = useUnsynced(modelName) || [],
         getGroup = (record) => (group_by && record[group_by]) || null;
 
     return unsyncedItems
@@ -24,8 +25,9 @@ function useChoices(modelName, group_by) {
         );
 }
 
-function useFilteredChoices(modelName, group_by, filterConf) {
-    const choices = useChoices(modelName, group_by),
+export function useFilteredChoices(modelName, group_by, filterConf) {
+    const { useChoices } = useComponents(),
+        choices = useChoices(modelName, group_by),
         { values } = useFormikContext(),
         filter = {};
 
@@ -39,8 +41,8 @@ function useFilteredChoices(modelName, group_by, filterConf) {
     );
 }
 
-function useSelectInput(component) {
-    const inputs = useInputComponents(),
+export function useSelectInput(component) {
+    const inputs = useComponents(),
         { Select } = inputs;
     let Component;
     if (typeof component === "string") {
@@ -63,13 +65,26 @@ function useSelectInput(component) {
     return Component;
 }
 
-export default function ForeignKey({ filter, ...rest }) {
+const ForeignKeyFallback = {
+    components: {
+        useModel: createFallbackComponent("useModel", "@wq/model"),
+        useUnsynced: createFallbackComponent("useUnsynced", "@wq/outbox"),
+        Select: createFallbackComponent("Select", "@wq/form"),
+        useChoices,
+        useFilteredChoices,
+        useSelectInput,
+    },
+};
+
+function ForeignKey({ filter, ...rest }) {
     if (filter) {
         return <FilteredForeignKey filter={filter} {...rest} />;
     } else {
         return <UnfilteredForeignKey {...rest} />;
     }
 }
+
+export default withWQ(ForeignKey, { fallback: ForeignKeyFallback });
 
 function FilteredForeignKey({
     ["wq:ForeignKey"]: modelName,
@@ -78,7 +93,8 @@ function FilteredForeignKey({
     component,
     ...rest
 }) {
-    const choices = useFilteredChoices(modelName, group_by, filter),
+    const { useFilteredChoices, useSelectInput } = useComponents(),
+        choices = useFilteredChoices(modelName, group_by, filter),
         Select = useSelectInput(component);
     return <Select {...rest} choices={choices} />;
 }
@@ -89,7 +105,8 @@ function UnfilteredForeignKey({
     component,
     ...rest
 }) {
-    const choices = useChoices(modelName, group_by),
+    const { useChoices, useSelectInput } = useComponents(),
+        choices = useChoices(modelName, group_by),
         Select = useSelectInput(component);
     return <Select {...rest} choices={choices} />;
 }

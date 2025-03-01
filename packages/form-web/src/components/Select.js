@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import { withWQ } from "@wq/react";
 import { Field, getIn } from "formik";
 import { Select as FMuiSelect } from "formik-mui";
 import { MenuItem, Checkbox, ListItemText, ListSubheader } from "@mui/material";
@@ -16,7 +17,7 @@ ContextCheckbox.propTypes = {
     field: PropTypes.string,
 };
 
-export default function Select({
+function Select({
     choices,
     label,
     required,
@@ -153,3 +154,5 @@ Select.propTypes = {
     renderValue: PropTypes.func,
     InputLabelProps: PropTypes.object,
 };
+
+export default withWQ(Select);

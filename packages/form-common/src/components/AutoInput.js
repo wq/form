@@ -1,10 +1,46 @@
-import React from "react";
-import { useComponents, useInputComponents } from "../hooks.js";
+import React, { Fragment } from "react";
+import { useComponents, withWQ, createFallbackComponents } from "@wq/react";
+import AutoSubform from "./AutoSubform.js";
+import AutoSubformArray from "./AutoSubformArray.js";
+import ForeignKey from "./ForeignKey.js";
+import GeoInput from "./GeoInput.js";
 import PropTypes from "prop-types";
 import { pascalCase } from "pascal-case";
 
-export default function AutoInput({ name, choices, type, bind = {}, ...rest }) {
-    const inputs = useInputComponents(),
+const AutoInputDefaults = {
+        components: {
+            AutoSubform,
+            AutoSubformArray,
+            ForeignKey,
+            Geo: GeoInput,
+            GeoPoint: GeoInput,
+            GeoTrace: GeoInput,
+            GeoShape: GeoInput,
+        },
+    },
+    AutoInputFallback = {
+        components: {
+            Text: Fragment,
+            ...createFallbackComponents(
+                [
+                    "Checkbox",
+                    "DateTime",
+                    "File",
+                    "Hidden",
+                    "Image",
+                    "Input",
+                    "Radio",
+                    "Select",
+                    "Toggle",
+                ],
+                "@wq/form",
+                "AutoForm"
+            ),
+        },
+    };
+
+function AutoInput({ name, choices, type, bind = {}, ...rest }) {
+    const inputs = useComponents(),
         { AutoSubform, AutoSubformArray, Text } = useComponents();
 
     if (type === "group") {
@@ -41,9 +77,6 @@ export default function AutoInput({ name, choices, type, bind = {}, ...rest }) {
             inputType = "image";
         } else if (type === "video" || type === "audio") {
             inputType = "file";
-        } else if (type === "binary") {
-            // wq.db <1.3
-            inputType = "file";
         } else {
             inputType = "input";
         }
@@ -58,8 +91,8 @@ export default function AutoInput({ name, choices, type, bind = {}, ...rest }) {
     if (!Input) {
         return (
             <Text>
-                Unknown input type &quot;{inputType}&quot;. Perhaps you need to
-                define inputs.{pascalCase(inputType)} in a plugin?
+                Unknown input type &quot;{inputType}&quot;. Try registering via{" "}
+                {`wq={{components: { ${pascalCase(inputType)} }}}.`}
             </Text>
         );
     }
@@ -82,3 +115,8 @@ AutoInput.propTypes = {
     "wq:ForeignKey": PropTypes.string,
     choices: PropTypes.arrayOf(PropTypes.object),
 };
+
+export default withWQ(AutoInput, {
+    defaults: AutoInputDefaults,
+    fallback: AutoInputFallback,
+});

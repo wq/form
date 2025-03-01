@@ -1,11 +1,17 @@
 import React, { useEffect } from "react";
-import { useComponents, useInputComponents } from "@wq/react";
+import { useComponents, withWQ, createFallbackComponent } from "@wq/react";
 import { useField } from "formik";
 import PropTypes from "prop-types";
 
-export default function GeoCoords({ name, value, type, setLocation }) {
-    const { IconButton } = useComponents(),
-        { Input } = useInputComponents(),
+const GeoCoordsFallback = {
+    components: {
+        IconButton: createFallbackComponent("IconButton", "@wq/material"),
+        Input: createFallbackComponent("Input", "@wq/form", "AutoForm"),
+    },
+};
+
+function GeoCoords({ name, value, type, setLocation }) {
+    const { IconButton, Input } = useComponents(),
         longitudeName = `${name}_longitude`,
         latitudeName = `${name}_latitude`,
         [, { value: longitude }, { setValue: setLongitude }] =
@@ -90,3 +96,5 @@ GeoCoords.propTypes = {
     type: PropTypes.str,
     setLocation: PropTypes.func,
 };
+
+export default withWQ(GeoCoords, { fallback: GeoCoordsFallback });

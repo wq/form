@@ -1,11 +1,12 @@
 import React from "react";
+import { withWQ } from "@wq/react";
 import { useField } from "formik";
 import { Checkbox as PaperCheckbox, useTheme } from "react-native-paper";
 import { Text, View } from "react-native";
 import HelperText from "./HelperText.js";
 import PropTypes from "prop-types";
 
-export default function Checkbox({ name, label, hint }) {
+function Checkbox({ name, label, hint }) {
     const theme = useTheme(),
         [, meta, helpers] = useField(name),
         { value } = meta,
@@ -45,3 +46,5 @@ Checkbox.propTypes = {
     label: PropTypes.string,
     hint: PropTypes.string,
 };
+
+export default withWQ(Checkbox);

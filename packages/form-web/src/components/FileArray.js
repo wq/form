@@ -1,13 +1,20 @@
 import React, { useMemo, useCallback, useRef } from "react";
+import { useComponents, withWQ } from "@wq/react";
 import { useField } from "formik";
 import * as MuiFileDropzone from "mui-file-dropzone";
 import Fieldset from "./Fieldset.js";
-import HelperText from "../inputs/HelperText.js";
+import HelperText from "./HelperText.js";
 import PropTypes from "prop-types";
 
 const { DropzoneArea } = MuiFileDropzone;
 
-export default function FileArray({ name, label, subform, hint, maxRows }) {
+const FileArrayFallback = {
+    components: {
+        Fieldset,
+    },
+};
+
+function FileArray({ name, label, subform, hint, maxRows }) {
     const [, { initialValue = [] }, { setValue }] = useField(name),
         fileField = subform.find(
             (field) => field.type === "file" || field.type === "image"
@@ -16,7 +23,8 @@ export default function FileArray({ name, label, subform, hint, maxRows }) {
             type: "file",
         },
         accept = fileField.type === "image" ? "image/*" : null,
-        loadedRef = useRef(null);
+        loadedRef = useRef(null),
+        { Fieldset } = useComponents();
 
     const initialFiles = useMemo(() => {
             if (!initialValue || initialValue.length === 0) {
@@ -119,3 +127,5 @@ FileArray.propTypes = {
     hint: PropTypes.string,
     maxRows: PropTypes.number,
 };
+
+export default withWQ(FileArray, { fallback: FileArrayFallback });

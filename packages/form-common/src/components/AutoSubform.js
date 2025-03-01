@@ -1,18 +1,29 @@
-import React from "react";
-import { useComponents, useInputComponents } from "../hooks.js";
+import React, { Fragment } from "react";
+import { useComponents, withWQ, createFallbackComponent } from "@wq/react";
 import PropTypes from "prop-types";
 import { pascalCase } from "pascal-case";
 
-export default function AutoSubform({
-    name,
-    label,
-    subform,
-    component,
-    ...rest
-}) {
-    const components = useComponents(),
-        inputs = useInputComponents(),
-        { AutoInput } = components,
+export const Fieldset = createFallbackComponent(
+    "Fieldset",
+    "@wq/form",
+    "AutoForm"
+);
+
+const AutoSubformFallback = {
+    components: {
+        Text: Fragment,
+        AutoInput: createFallbackComponent(
+            "AutoInput",
+            "@wq/form",
+            "AutoForm or AutoFormBase"
+        ),
+        Fieldset,
+    },
+};
+
+function AutoSubform({ name, label, subform, component, ...rest }) {
+    const { AutoInput, Text } = useComponents(),
+        inputs = useComponents(),
         componentName = rest.control && rest.control.appearance;
 
     let Fieldset;
@@ -25,24 +36,14 @@ export default function AutoSubform({
         if (!Fieldset) {
             // eslint-disable-next-line
             Fieldset = ({ children, ...rest }) => {
-                const { Text } = components,
-                    { Fieldset } = inputs,
-                    name = pascalCase(componentName);
+                const { Fieldset } = inputs,
+                    pascalName = pascalCase(componentName);
                 return (
                     <Fieldset {...rest}>
                         <Text>
                             Unknown fieldset type &quot;{componentName}&quot;.{" "}
-                            {components[componentName] ? (
-                                <>
-                                    Move or copy components.{name} to inputs.
-                                    {name}?
-                                </>
-                            ) : (
-                                <>
-                                    Perhaps you need to define inputs.{name} in
-                                    a plugin?
-                                </>
-                            )}
+                            Try registering via{" "}
+                            {`wq={{components: { ${pascalName} }}}.`}
                         </Text>
                         {children}
                     </Fieldset>
@@ -76,3 +77,5 @@ AutoSubform.propTypes = {
     subform: PropTypes.arrayOf(PropTypes.object),
     component: PropTypes.elementType,
 };
+
+export default withWQ(AutoSubform, { fallback: AutoSubformFallback });

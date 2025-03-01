@@ -1,8 +1,9 @@
 import React from "react";
+import { withWQ } from "@wq/react";
 import { List } from "react-native-paper";
 import FieldsetArray from "./FieldsetArray.js";
 
-export default function FileArray(props) {
+function FileArray(props) {
     return (
         <>
             {props.label && <List.Subheader>{props.label}</List.Subheader>}
@@ -10,3 +11,5 @@ export default function FileArray(props) {
         </>
     );
 }
+
+export default withWQ(FileArray);

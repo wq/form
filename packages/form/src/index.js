@@ -1,4 +1,2 @@
-import material from "@wq/material-web";
-
-export default material;
-export * from "@wq/material-web";
+export * from "@wq/form-common";
+export * from "@wq/form-web";

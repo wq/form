@@ -1,4 +1,5 @@
 import React from "react";
+import { withWQ } from "@wq/react";
 import { Field } from "formik";
 import { RadioGroup } from "formik-mui";
 import {
@@ -10,7 +11,7 @@ import {
 import HelperText from "./HelperText.js";
 import PropTypes from "prop-types";
 
-export default function Radio({ choices, label, ...rest }) {
+function Radio({ choices, label, ...rest }) {
     return (
         <FormControl component="fieldset" fullWidth margin="dense">
             <FormLabel component="legend">{label}</FormLabel>
@@ -33,3 +34,5 @@ Radio.propTypes = {
     choices: PropTypes.arrayOf(PropTypes.object),
     label: PropTypes.string,
 };
+
+export default withWQ(Radio);

@@ -1,19 +1,19 @@
 {
-    "name": "@wq/material-native",
+    "name": "@wq/form-native",
     "version": "2.1.0",
     "description": "React Native and Expo bindings for @wq/material",
     "type": "module",
     "main": "src/index.js",
     "scripts": {
-        "test": "cd ../../ && npm run jest packages/material-native -- --config packages/material-native/jest.config.js --moduleDirectories node_modules/ packages/material-native/node_modules/",
+        "test": "cd ../../ && npm run jest packages/form-native -- --config packages/form-native/jest.config.js --moduleDirectories node_modules/ packages/form-native/node_modules/",
         "build": "npm run prettier",
-        "prettier": "cd ../../ && npm run prettier -- --write packages/material-native/",
-        "lint": "cd ../../ && npm run eslint packages/material-native/{,src/,src/*/,src/*/*/}*.js"
+        "prettier": "cd ../../ && npm run prettier -- --write packages/form-native/",
+        "lint": "cd ../../ && npm run eslint packages/form-native/{,src/,src/*/,src/*/*/}*.js"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/wq/wq.app.git",
-        "directory": "packages/material-native"
+        "url": "git+https://github.com/wq/form.git",
+        "directory": "packages/form-native"
     },
     "keywords": [
         "wq",
@@ -24,34 +24,27 @@
     "author": "S. Andrew Sheppard",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/wq/wq.app/issues"
+        "url": "https://github.com/wq/form/issues"
     },
-    "homepage": "https://wq.io/@wq/material",
+    "homepage": "https://wq.io/@wq/form",
     "dependencies": {
-        "@wq/react": "^2.1.0",
-        "date-fns": "^3.6.0"
+        "@wq/map-gl-native": "^3.0.0-a1-dev5.g31f4b5c",
+        "@wq/material-native": "^3.0.0-a1-dev1.g760eb56",
+        "@wq/react": "^3.0.0-a1-dev1.g760eb56"
     },
     "peerDependencies": {
-        "@react-native-async-storage/async-storage": "*",
-        "@react-native-community/netinfo": "*",
-        "@react-navigation/stack": "*",
         "expo-application": "*",
         "expo-document-picker": "*",
         "expo-image-picker": "*",
-        "expo-router": "*",
         "react-native-modal-datetime-picker": "*",
         "react-native-paper": "*",
         "react-native-picker-select": "*"
     },
     "devDependencies": {
-        "@react-native-async-storage/async-storage": "^1.24.0",
-        "@react-native-community/netinfo": "^11.3.2",
-        "@react-navigation/stack": "^6.4.1",
         "expo-application": "^5.9.1",
         "expo-document-picker": "^12.0.2",
         "expo-image-picker": "^15.0.7",
-        "expo-router": "^3.5.23",
-        "jest-expo": "^51.0.3",
+        "jest-expo": "^52.0.5",
         "react-native-modal-datetime-picker": "^17.1.0",
         "react-native-paper": "^5.12.5",
         "react-native-picker-select": "^9.3.1"

@@ -1,10 +1,11 @@
 import React from "react";
+import { withWQ } from "@wq/react";
 import { Field } from "formik";
 import { TextField } from "formik-mui";
-import { useHtmlInput } from "@wq/react";
+import { useHtmlInput } from "@wq/form-common";
 import PropTypes from "prop-types";
 
-export default function Input({ hint, inputProps, ...rest }) {
+function Input({ hint, inputProps, ...rest }) {
     const { name, type, maxLength } = useHtmlInput(rest);
     return (
         <Field
@@ -25,3 +26,5 @@ Input.propTypes = {
     hint: PropTypes.string,
     inputProps: PropTypes.object,
 };
+
+export default withWQ(Input);

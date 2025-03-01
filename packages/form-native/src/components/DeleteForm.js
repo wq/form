@@ -1,32 +1,51 @@
 import React from "react";
+import {
+    useComponents,
+    useMessage,
+    withWQ,
+    createFallbackComponents,
+} from "@wq/react";
+import { Form } from "@wq/form-common";
+import SubmitButton from "./SubmitButton.js";
 import Alert from "react-native";
-import { useComponents, useMessages } from "@wq/react";
 import PropTypes from "prop-types";
 
-export default function DeleteForm({ action }) {
+const DeleteFormFallback = {
+    messages: {
+        CONFIRM_DELETE: "Are you sure you want to delete this record?",
+        CONFIRM_DELETE_TITLE: "Confirm Deletion",
+        CONFIRM_DELETE_OK: "Yes, Delete",
+        CONFIRM_DELETE_CANCEL: "Cancel",
+    },
+    components: {
+        Form,
+        SubmitButton,
+        ...createFallbackComponents(["View", "HorizontalView"], "@wq/material"),
+    },
+};
+
+function DeleteForm({ action }) {
     const { Form, SubmitButton, View, HorizontalView } = useComponents(),
-        {
-            CONFIRM_DELETE,
-            CONFIRM_DELETE_TITLE,
-            CONFIRM_DELETE_OK,
-            CONFIRM_DELETE_CANCEL,
-        } = useMessages();
+        confirmDelete = useMessage("CONFIRM_DELETE"),
+        confirmDeleteTitle = useMessage("CONFIRM_DELETE_TITLE"),
+        confirmDeleteOk = useMessage("CONFIRM_DELETE_OK"),
+        confirmDeleteCancel = useMessage("CONFIRM_DELETE_CANCEL");
 
     async function confirmSubmit() {
         return new Promise((resolve) => {
             Alert.alert(
-                CONFIRM_DELETE_TITLE,
-                CONFIRM_DELETE,
+                confirmDeleteTitle,
+                confirmDelete,
                 [
                     {
-                        text: CONFIRM_DELETE_CANCEL,
+                        text: confirmDeleteCancel,
                         onPress() {
                             resolve(false);
                         },
                         style: "cancel",
                     },
                     {
-                        text: CONFIRM_DELETE_OK,
+                        text: confirmDeleteOk,
                         onPress() {
                             resolve(true);
                         },
@@ -62,3 +81,5 @@ export default function DeleteForm({ action }) {
 DeleteForm.propTypes = {
     action: PropTypes.string,
 };
+
+export default withWQ(DeleteForm, { fallback: DeleteFormFallback });

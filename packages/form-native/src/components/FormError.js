@@ -1,8 +1,9 @@
 import React from "react";
+import { withWQ } from "@wq/react";
 import { useField } from "formik";
 import { HelperText } from "react-native-paper";
 
-export default function FormError(props) {
+function FormError(props) {
     const [, { error }] = useField("__other__");
     if (!error) {
         return null;
@@ -13,3 +14,5 @@ export default function FormError(props) {
         </HelperText>
     );
 }
+
+export default withWQ(FormError);

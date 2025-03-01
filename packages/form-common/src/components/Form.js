@@ -1,9 +1,18 @@
 import React from "react";
-import { useApp, useComponents, useValidate } from "../hooks.js";
-import { Formik } from "formik";
+import { useComponents, withWQ, createFallbackComponent } from "@wq/react";
+import { Formik, Form as FormRoot } from "formik";
+import { useValidate } from "../hooks.js";
 import PropTypes from "prop-types";
 
-export default function Form({
+const FormFallback = {
+    components: {
+        FormRoot,
+        useValidate,
+        useSubmitForm: createFallbackComponent("useSubmitForm", "@wq/outbox"),
+    },
+};
+
+function Form({
     action,
     method,
     onSubmit,
@@ -14,19 +23,14 @@ export default function Form({
     modelConf,
     data = {},
     error,
-    FormRoot,
     children,
 }) {
-    const app = useApp(),
+    const { FormRoot, useValidate, useSubmitForm } = useComponents(),
         validate = useValidate(),
-        { FormRoot: DefaultRoot } = useComponents();
+        submitForm = useSubmitForm();
 
     if (backgroundSync === undefined) {
-        backgroundSync = app.config.backgroundSync;
-    }
-
-    if (!FormRoot) {
-        FormRoot = DefaultRoot;
+        backgroundSync = false;
     }
 
     async function handleSubmit(
@@ -43,7 +47,7 @@ export default function Form({
 
         const has_files = checkForFiles(values);
 
-        const [item, error] = await app.submitForm({
+        const [item, error] = await submitForm({
             url: action,
             storage,
             backgroundSync,
@@ -99,6 +103,8 @@ Form.propTypes = {
     FormRoot: PropTypes.func,
     children: PropTypes.node,
 };
+
+export default withWQ(Form, { fallback: FormFallback });
 
 function parseApiError(error, values) {
     if (!error) {

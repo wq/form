@@ -1,46 +1,39 @@
 {
-    "name": "@wq/react",
+    "name": "@wq/form-common",
     "version": "2.2.0",
-    "description": "React renderer for use with @wq/app",
+    "description": "Schema-based form generation and validation",
     "type": "module",
     "main": "index.js",
-    "react-native": "src/index.native.js",
     "scripts": {
-        "test": "cd ../../ && npm run jest packages/react",
+        "test": "cd ../../ && npm run jest packages/form-common",
         "build": "npm run babel && npm run prettier",
-        "rollup": "cd ../../ && npm run rollup -- -c packages/react/rollup.config.js",
-        "babel": "cd ../../ && npm run babel -- packages/react/src --out-dir packages/react/",
-        "prettier": "cd ../../ && npm run prettier -- --write packages/react/",
-        "lint": "cd ../../ && npm run eslint packages/react/{,src/,src/*/,src/*/*/}*.js"
+        "rollup": "cd ../../ && npm run rollup -- -c packages/form-common/rollup.config.js",
+        "babel": "cd ../../ && npm run babel -- packages/form-common/src --out-dir packages/form-common/",
+        "prettier": "cd ../../ && npm run prettier -- --write packages/form-common/",
+        "lint": "cd ../../ && npm run eslint packages/form-common/{,src/,src/*/,src/*/*/}*.js"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/wq/wq.app.git",
-        "directory": "packages/react"
+        "url": "git+https://github.com/wq/form.git",
+        "directory": "packages/form-common"
     },
     "keywords": [
         "wq",
-        "react"
+        "react",
+        "form"
     ],
     "author": "S. Andrew Sheppard",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/wq/wq.app/issues"
+        "url": "https://github.com/wq/form/issues"
     },
-    "homepage": "https://wq.io/@wq/react",
+    "homepage": "https://wq.io/@wq/form",
     "dependencies": {
-        "@wq/model": "^2.1.0",
-        "@wq/outbox": "^2.1.0",
-        "@wq/router": "^2.0.0",
+        "@turf/circle": "^7.2.0",
+        "@wq/map": "^3.0.0-a1-dev5.g31f4b5c",
+        "@wq/react": "^3.0.0-a1-dev1.g760eb56",
+        "date-fns": "^3.6.0",
         "formik": "^2.4.2",
-        "param-case": "^3.0.4",
-        "pascal-case": "^3.1.2",
-        "react-redux": "^8.1.0"
-    },
-    "devDependencies": {
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "react-test-renderer": "^18.2.0",
-        "redux-first-router-link": "https://github.com/faceyspacey/redux-first-router-link/archive/e68b143.tar.gz"
+        "pascal-case": "^3.1.2"
     }
 }

@@ -1,8 +1,9 @@
 import React from "react";
+import { withWQ } from "@wq/react";
 import PropTypes from "prop-types";
 import Icon from "react-native-paper/src/components/Icon";
 
-export default function GeoHelpIcon({ name, type }) {
+function GeoHelpIcon({ name, type }) {
     const iconClass = getIconClass(name, type);
     if (!iconClass) {
         return `{${name}}`;
@@ -43,3 +44,5 @@ function getIconClass(iconName, drawType) {
         return null;
     }
 }
+
+export default withWQ(GeoHelpIcon);

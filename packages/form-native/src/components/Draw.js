@@ -1,22 +1,33 @@
 import React, { useEffect } from "react";
-import { useMapInstance } from "../hooks.js";
-import Geojson from "./Geojson.js";
+import { createFallbackComponent, useComponents, withWQ } from "@wq/react";
 import PropTypes from "prop-types";
 
-export default function Draw({ name, data, setData }) {
-    const map = useMapInstance(name);
+const DrawFallback = {
+    components: {
+        Geojson: createFallbackComponent("Geojson", "@wq/form", "AutoForm"),
+        useMapInstance: createFallbackComponent(
+            "useMapInstance",
+            "@wq/form",
+            "AutoForm"
+        ),
+    },
+};
+
+function Draw({ name, data, setData }) {
+    const { Geojson, useMapInstance } = useComponents(),
+        map = useMapInstance(name);
 
     useEffect(() => {
         if (!map) {
             return;
         }
-        map._onPress = (evt) => {
-            setData(evt.nativeEvent.payload.geometry);
-        };
-        return () => {
-            map._onPress = () => null;
-        };
+        map.on("click", onClick);
+        function onClick(evt) {
+            setData(evt.geometry);
+        }
+        return () => map.off("click", onClick);
     }, [map]);
+
     if (!data) {
         return null;
     }
@@ -28,3 +39,5 @@ Draw.propTypes = {
     data: PropTypes.object,
     setData: PropTypes.func,
 };
+
+export default withWQ(Draw, { fallback: DrawFallback });

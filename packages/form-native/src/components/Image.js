@@ -1,6 +1,9 @@
 import React from "react";
+import { withWQ } from "@wq/react";
 import File from "./File.js";
 
-export default function Image(props) {
+function Image(props) {
     return <File accept="image/*" {...props} />;
 }
+
+export default withWQ(Image);

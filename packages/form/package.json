@@ -1,33 +1,36 @@
 {
-    "name": "@wq/material",
+    "name": "@wq/form",
     "version": "2.1.0",
-    "description": "React + Material UI renderer for use with @wq/app",
+    "description": "Schema-driven Material UI + MapLibre forms for use with @wq/app",
     "type": "module",
     "main": "src/index.js",
     "react-native": "src/index.native.js",
     "scripts": {
-        "test": "cd ../../ && npm run jest packages/material/",
-        "prettier": "cd ../../ && npm run prettier -- --write packages/material/",
-        "lint": "cd ../../ && npm run eslint packages/material/{,src/,src/*/}*.js"
+        "test": "cd ../../ && npm run jest packages/form/",
+        "prettier": "cd ../../ && npm run prettier -- --write packages/form/",
+        "lint": "cd ../../ && npm run eslint packages/form/{,src/,src/*/}*.js"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/wq/wq.app.git",
-        "directory": "packages/material"
+        "url": "git+https://github.com/wq/form.git",
+        "directory": "packages/form"
     },
     "keywords": [
         "wq",
         "react",
         "material",
-        "material-ui"
+        "material-ui",
+        "form",
+        "maplibre",
+        "schema"
     ],
     "author": "S. Andrew Sheppard",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/wq/wq.app/issues"
+        "url": "https://github.com/wq/form/issues"
     },
-    "homepage": "https://wq.io/@wq/material",
+    "homepage": "https://wq.io/@wq/form",
     "devDependencies": {
-        "@wq/material-web": "^2.1.0"
+        "@wq/form-web": "^2.1.0"
     }
 }

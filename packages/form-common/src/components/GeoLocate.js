@@ -1,8 +1,29 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useComponents, Message } from "@wq/react";
+import {
+    useComponents,
+    useMessage,
+    withWQ,
+    createFallbackComponent,
+} from "@wq/react";
 import PropTypes from "prop-types";
 
-export default function GeoLocate({ type, setLocation, value, accuracy }) {
+const GeoLocateFallback = {
+    messages: {
+        GEO_START_GPS: "Start GPS",
+        GEO_STOP_GPS: "Stop GPS",
+    },
+    components: {
+        Button: createFallbackComponent("Button", "@wq/material"),
+        Typography: createFallbackComponent("Typography", "@wq/material"),
+        useGeolocation: createFallbackComponent(
+            "useGeolocation",
+            "@wq/form",
+            "AutoForm"
+        ),
+    },
+};
+
+function GeoLocate({ type, setLocation, value, accuracy }) {
     const { Button, Typography, useGeolocation } = useComponents(),
         geolocation = useGeolocation(),
         [gpsStatus, setGpsStatus] = useState(""),
@@ -62,6 +83,7 @@ export default function GeoLocate({ type, setLocation, value, accuracy }) {
     }, []);
 
     const gpsActive = !!gpsWatch.current,
+        gpsMessage = useMessage(gpsActive ? "GEO_STOP_GPS" : "GEO_START_GPS"),
         valueStatus =
             value &&
             value.type === "Point" &&
@@ -87,7 +109,7 @@ export default function GeoLocate({ type, setLocation, value, accuracy }) {
                 color="secondary"
                 onClick={gpsActive ? resetGps : startGps}
             >
-                <Message id={gpsActive ? "GEO_STOP_GPS" : "GEO_START_GPS"} />
+                {gpsMessage}
             </Button>
         </>
     );
@@ -115,3 +137,5 @@ function formatLoc(lat, lng, acc) {
                 : "";
     return `${latFmt} ${lngFmt}${accFmt}`;
 }
+
+export default withWQ(GeoLocate, { fallback: GeoLocateFallback });

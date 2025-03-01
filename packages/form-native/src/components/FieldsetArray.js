@@ -1,8 +1,12 @@
 import React from "react";
-import { useComponents } from "@wq/react";
+import { useComponents, withWQ, createFallbackComponents } from "@wq/react";
 import PropTypes from "prop-types";
 
-export default function FieldsetArray({ label, children, addRow }) {
+const FieldsetArrayFallback = {
+    components: createFallbackComponents(["View", "Button"], "@wq/material"),
+};
+
+function FieldsetArray({ label, children, addRow }) {
     const { View, Button } = useComponents();
     return (
         <View>
@@ -19,3 +23,5 @@ FieldsetArray.propTypes = {
     children: PropTypes.node,
     addRow: PropTypes.func,
 };
+
+export default withWQ(FieldsetArray, { fallback: FieldsetArrayFallback });

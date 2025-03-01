@@ -1,16 +1,20 @@
 import React, { useState } from "react";
 import { useField } from "formik";
-import { useComponents } from "@wq/react";
+import { withWQ, useComponents, createFallbackComponents } from "@wq/react";
 import { View, Text } from "react-native";
 import { Button, List, Menu } from "react-native-paper";
 import * as Application from "expo-application";
 import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";
-import { format } from "./date-utils.js";
+import { format } from "@wq/form-common";
 import HelperText from "./HelperText.js";
 import PropTypes from "prop-types";
 
-export default function File({ name, accept, capture, required, label, hint }) {
+const FileFallback = {
+    components: createFallbackComponents(["Img", "Popup"], "@wq/material"),
+};
+
+function File({ name, accept, capture, required, label, hint }) {
     const [, { value }, { setValue }] = useField(name),
         [imageOpen, setImageOpen] = useState(false),
         [menuOpen, setMenuOpen] = useState(false),
@@ -117,6 +121,8 @@ File.propTypes = {
     label: PropTypes.string,
     hint: PropTypes.string,
 };
+
+export default withWQ(File, { fallback: FileFallback });
 
 function isImage(value) {
     if (typeof value === "string") {

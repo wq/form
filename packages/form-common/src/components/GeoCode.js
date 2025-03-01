@@ -1,25 +1,37 @@
 import React, { useState, useEffect } from "react";
-import { useComponents, useInputComponents, usePlugin } from "@wq/react";
+import { useComponents, withWQ, createFallbackComponent } from "@wq/react";
 import { useField, useFormikContext } from "formik";
 import PropTypes from "prop-types";
 
-export default function GeoCode({ name, type, setLocation }) {
-    const { IconButton } = useComponents(),
-        { Input } = useInputComponents(),
+const GeoCodeFallback = {
+    components: {
+        IconButton: createFallbackComponent("IconButton", "@wq/material"),
+        Input: createFallbackComponent("Input", "@wq/form", "AutoForm"),
+        useGeocoder() {
+            return async function geocoder() {
+                throw new Error("No geocoder registered!");
+            };
+        },
+        useGeocoderAddress() {
+            return null;
+        },
+    },
+};
+
+function GeoCode({ name, type, setLocation }) {
+    const { IconButton, Input, useGeocoder, useGeocoderAddress } =
+            useComponents(),
         [
             ,
             { value: address },
             { setValue: setAddress, setError: setAddressError },
         ] = useField(name + "_address"),
         [geocodeStatus, setGeocodeStatus] = useState(null),
-        { geocoder, geocoderAddress } = usePlugin("map").config,
+        geocoder = useGeocoder(),
+        geocoderAddress = useGeocoderAddress(),
         { values } = useFormikContext();
 
     async function geocode() {
-        if (!geocoder) {
-            setAddressError("No geocoder plugin registered!");
-            return;
-        }
         setAddressError(null);
         setGeocodeStatus("Looking up location...");
         try {
@@ -71,3 +83,5 @@ GeoCode.propTypes = {
     type: PropTypes.string,
     setLocation: PropTypes.func,
 };
+
+export default withWQ(GeoCode, { fallback: GeoCodeFallback });

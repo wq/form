@@ -1,4 +1,5 @@
 import React, { useMemo, useCallback, useRef } from "react";
+import { withWQ } from "@wq/react";
 import { useField } from "formik";
 import * as MuiFileDropzone from "mui-file-dropzone";
 import { InputLabel } from "@mui/material";
@@ -7,7 +8,7 @@ import PropTypes from "prop-types";
 
 const { DropzoneArea } = MuiFileDropzone;
 
-export default function File({ name, accept, hint, label }) {
+function File({ name, accept, hint, label }) {
     const [, { initialValue }, { setValue }] = useField(name),
         loadedRef = useRef(null);
 
@@ -70,3 +71,5 @@ File.propTypes = {
     label: PropTypes.string,
     hint: PropTypes.string,
 };
+
+export default withWQ(File);

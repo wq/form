@@ -1,14 +1,26 @@
-import React, { useCallback } from "react";
-import { useComponents, useInputComponents } from "../hooks.js";
+import React, { Fragment, useCallback } from "react";
+import { useComponents, withWQ, createFallbackComponents } from "@wq/react";
 import { FieldArray, getIn } from "formik";
 import PropTypes from "prop-types";
-import { initData } from "./AutoForm.js";
+import AutoSubform from "./AutoSubform.js";
+import { initFormData } from "../hooks.js";
 import { pascalCase } from "pascal-case";
 
-export default function AutoSubformArray({ name, label, subform, ...rest }) {
-    const components = useComponents(),
-        inputs = useInputComponents(),
-        { AutoSubform } = components,
+const AutoSubformArrayFallback = {
+    components: {
+        AutoSubform,
+        Text: Fragment,
+        ...createFallbackComponents(
+            ["FieldsetArray", "FileArray"],
+            "@wq/form",
+            "AutoForm"
+        ),
+    },
+};
+
+function AutoSubformArray({ name, label, subform, ...rest }) {
+    const { AutoSubform, Text } = useComponents(),
+        inputs = useComponents(),
         componentName = rest.control && rest.control.appearance;
 
     let FieldsetArray;
@@ -18,25 +30,14 @@ export default function AutoSubformArray({ name, label, subform, ...rest }) {
         if (!FieldsetArray) {
             // eslint-disable-next-line
             FieldsetArray = ({ children, ...rest }) => {
-                const { Text } = components,
-                    { FieldsetArray } = inputs,
-                    name = pascalCase(componentName);
+                const { FieldsetArray } = inputs,
+                    pascalName = pascalCase(componentName);
                 return (
                     <FieldsetArray {...rest}>
                         <Text>
                             Unknown fieldset array type &quot;{componentName}
-                            &quot;.{" "}
-                            {components[componentName] ? (
-                                <>
-                                    Move or copy components.{name} to inputs.
-                                    {name}?
-                                </>
-                            ) : (
-                                <>
-                                    Perhaps you need to define inputs.{name} in
-                                    a plugin?
-                                </>
-                            )}
+                            &quot;. Try registering via{" "}
+                            {`wq={{components: { ${pascalName} }}}.`}
                         </Text>
                         {children}
                     </FieldsetArray>
@@ -60,7 +61,7 @@ export default function AutoSubformArray({ name, label, subform, ...rest }) {
                 list = getIn(values, name) || [];
 
             function addRow(vals) {
-                const row = initData(subform, vals || {});
+                const row = initFormData(subform, vals || {});
                 push(row);
             }
 
@@ -109,3 +110,5 @@ AutoSubformArray.propTypes = {
     label: PropTypes.string,
     subform: PropTypes.arrayOf(PropTypes.object),
 };
+
+export default withWQ(AutoSubformArray, { fallback: AutoSubformArrayFallback });

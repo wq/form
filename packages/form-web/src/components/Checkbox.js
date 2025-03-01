@@ -1,10 +1,11 @@
 import React from "react";
+import { withWQ } from "@wq/react";
 import { Field } from "formik";
 import { CheckboxWithLabel } from "formik-mui";
 import HelperText from "./HelperText.js";
 import PropTypes from "prop-types";
 
-export default function Input({ label, ...props }) {
+function Checkbox({ label, ...props }) {
     return (
         <>
             <Field
@@ -18,8 +19,10 @@ export default function Input({ label, ...props }) {
     );
 }
 
-Input.propTypes = {
+Checkbox.propTypes = {
     name: PropTypes.string,
     label: PropTypes.string,
     hint: PropTypes.string,
 };
+
+export default withWQ(Checkbox);

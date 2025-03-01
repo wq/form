@@ -1,9 +1,10 @@
 import { useRef, useEffect } from "react";
-import PropTypes from "prop-types";
-import { useControl } from "react-map-gl";
+import { withWQ } from "@wq/react";
+import { useControl } from "react-map-gl/maplibre";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
+import PropTypes from "prop-types";
 
-export default function Draw({ type, required, data, setData }) {
+function Draw({ type, required, data, setData }) {
     const types = type === "all" ? ["point", "line_string", "polygon"] : [type],
         controls = {},
         ref = useRef();
@@ -67,3 +68,5 @@ Draw.propTypes = {
     data: PropTypes.object,
     setData: PropTypes.func,
 };
+
+export default withWQ(Draw);

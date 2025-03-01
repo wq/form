@@ -1,15 +1,37 @@
 import React from "react";
-import { useComponents, useInputComponents } from "@wq/react";
-import {
-    TYPE_MAP,
-    useOverlayComponents,
-    useFeatureCollection,
-    asGeometry,
-} from "../hooks.js";
+import { useComponents, withWQ, createFallbackComponents } from "@wq/react";
+import { Fieldset } from "./AutoSubform.js";
+import GeoAccuracy from "./GeoAccuracy.js";
+import GeoTools from "./GeoTools.js";
+import { AutoMap, useFeatureCollection, asGeometry } from "@wq/map";
 import { useField } from "formik";
 import PropTypes from "prop-types";
 
-export default function Geo({
+export const TYPE_MAP = {
+    geopoint: "point",
+    geotrace: "line_string",
+    geoshape: "polygon",
+};
+
+const GeoInputDefault = {
+        components: {
+            AutoMap,
+            GeoAccuracy,
+            GeoTools,
+        },
+    },
+    GeoInputFallback = {
+        components: {
+            Fieldset,
+            ...createFallbackComponents(
+                ["MapProvider", "FlatFieldset", "HelperText", "Draw"],
+                "@wq/form",
+                "AutoForm"
+            ),
+        },
+    };
+
+function GeoInput({
     name,
     type,
     mapId = undefined,
@@ -19,13 +41,16 @@ export default function Geo({
     inset = true,
     children,
 }) {
-    const { MapProvider, AutoMap, GeoTools } = useComponents(),
-        {
+    const {
+            MapProvider,
+            AutoMap,
+            GeoAccuracy,
+            GeoTools,
             Fieldset: DefaultFieldset,
             FlatFieldset,
             HelperText,
-        } = useInputComponents(),
-        { Draw, Accuracy } = useOverlayComponents(),
+            Draw,
+        } = useComponents(),
         [, { value }, { setValue }] = useField(name),
         [, { value: accuracy }, { setValue: setAccuracy }] = useField(
             `${name}_accuracy`
@@ -55,7 +80,7 @@ export default function Geo({
                     toolbarAnchor="bottom-right"
                 >
                     {children}
-                    <Accuracy accuracy={accuracy} data={geojson} />
+                    <GeoAccuracy accuracy={accuracy} data={geojson} />
                     <Draw
                         name={name}
                         type={drawType}
@@ -70,7 +95,7 @@ export default function Geo({
     );
 }
 
-Geo.propTypes = {
+GeoInput.propTypes = {
     name: PropTypes.string,
     type: PropTypes.string,
     mapId: PropTypes.string,
@@ -82,3 +107,8 @@ Geo.propTypes = {
 };
 
 const emptyContext = {};
+
+export default withWQ(GeoInput, {
+    default: GeoInputDefault,
+    fallback: GeoInputFallback,
+});

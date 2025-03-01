@@ -1,5 +1,5 @@
-import reactRenderer from "../index.js";
+import { AutoFormBase } from "../index.js";
 
 test("it loads", () => {
-    expect(reactRenderer.name).toBe("react");
+    expect(AutoFormBase.displayName).toBe("AutoFormBase:wq");
 });

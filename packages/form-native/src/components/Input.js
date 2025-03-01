@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import { withWQ } from "@wq/react";
 import { View } from "react-native";
 import { TextInput } from "react-native-paper";
 import { useField } from "formik";
-import { useHtmlInput } from "@wq/react";
+import { useHtmlInput } from "@wq/form-common";
 import HelperText from "./HelperText.js";
 import PropTypes from "prop-types";
 
@@ -13,7 +14,7 @@ const keyboards = {
     email: "email-address",
 };
 
-export default function Input(props) {
+function Input(props) {
     const { name, type, label, hint, style, min, max, step } = props,
         { maxLength } = useHtmlInput(props),
         [, meta, helpers] = useField(name),
@@ -88,3 +89,5 @@ Input.propTypes = {
     max: PropTypes.number,
     step: PropTypes.number,
 };
+
+export default withWQ(Input);

@@ -1,9 +1,10 @@
 import React from "react";
+import { withWQ } from "@wq/react";
 import { useFormikContext, getIn } from "formik";
 import { HelperText as FormHelperText } from "react-native-paper";
 import PropTypes from "prop-types";
 
-export default function HelperText({ name, hint }) {
+function HelperText({ name, hint }) {
     const { errors, touched } = useFormikContext(),
         error = getIn(errors, name),
         showError = !!error && !!getIn(touched, name);
@@ -27,3 +28,5 @@ HelperText.propTypes = {
     name: PropTypes.string,
     hint: PropTypes.string,
 };
+
+export default withWQ(HelperText);

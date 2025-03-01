@@ -1,8 +1,15 @@
 import React from "react";
-import { Typography } from "@mui/material";
+import { useComponents, withWQ, createFallbackComponent } from "@wq/react";
 import PropTypes from "prop-types";
 
-export default function FlatFieldset({ label, children }) {
+const FlatFieldsetFallback = {
+    components: {
+        Typography: createFallbackComponent("Typography", "@wq/material"),
+    },
+};
+
+function FlatFieldset({ label, children }) {
+    const { Typography } = useComponents();
     return (
         <>
             <Typography color="textSecondary">{label}</Typography>
@@ -15,3 +22,5 @@ FlatFieldset.propTypes = {
     label: PropTypes.string,
     children: PropTypes.node,
 };
+
+export default withWQ(FlatFieldset, { fallback: FlatFieldsetFallback });

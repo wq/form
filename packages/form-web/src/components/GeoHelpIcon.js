@@ -1,7 +1,8 @@
 import React from "react";
+import { withWQ } from "@wq/react";
 import PropTypes from "prop-types";
 
-export default function GeoHelpIcon({ name, type }) {
+function GeoHelpIcon({ name, type }) {
     const iconClass = getIconClass(name, type);
     if (!iconClass) {
         return `{${name}}`;
@@ -24,6 +25,8 @@ GeoHelpIcon.propTypes = {
     name: PropTypes.string,
     type: PropTypes.string,
 };
+
+export default withWQ(GeoHelpIcon);
 
 const SHAPES = ["point", "line", "polygon"],
     ICONS = SHAPES.map((shape) => `${shape.toUpperCase()}_ICON`);

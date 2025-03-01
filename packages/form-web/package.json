@@ -1,20 +1,20 @@
 {
-    "name": "@wq/material-web",
+    "name": "@wq/form-web",
     "version": "2.1.0",
-    "description": "Web bindings for @wq/material",
+    "description": "Web bindings for @wq/form",
     "type": "module",
     "main": "index.js",
     "scripts": {
-        "test": "cd ../../ && npm run jest packages/material-web",
+        "test": "cd ../../ && npm run jest packages/form-web",
         "build": "npm run babel && npm run prettier",
-        "babel": "cd ../../ && npm run babel -- packages/material-web/src --out-dir packages/material-web/",
-        "prettier": "cd ../../ && npm run prettier -- --write packages/material-web/",
-        "lint": "cd ../../ && npm run eslint packages/material-web/{,src/,src/*/,src/*/*/}*.js"
+        "babel": "cd ../../ && npm run babel -- packages/form-web/src --out-dir packages/form-web/",
+        "prettier": "cd ../../ && npm run prettier -- --write packages/form-web/",
+        "lint": "cd ../../ && npm run eslint packages/form-web/{,src/,src/*/,src/*/*/}*.js"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/wq/wq.app.git",
-        "directory": "packages/material-web"
+        "url": "git+https://github.com/wq/form.git",
+        "directory": "packages/form-web"
     },
     "keywords": [
         "wq",
@@ -25,22 +25,23 @@
     "author": "S. Andrew Sheppard",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/wq/wq.app/issues"
+        "url": "https://github.com/wq/form/issues"
     },
-    "homepage": "https://wq.io/@wq/material",
+    "homepage": "https://wq.io/@wq/form",
     "dependencies": {
         "@emotion/react": "^11.11.1",
         "@emotion/styled": "^11.11.0",
+        "@mapbox/mapbox-gl-draw": "^1.5.0",
         "@mui/icons-material": "^5.11.16",
         "@mui/material": "^5.13.5",
-        "@wq/react": "^2.1.0",
-        "date-fns": "^2.30.0",
+        "@wq/form-common": "*",
+        "@wq/map-gl-web": "^3.0.0-a1-dev5.g31f4b5c",
+        "@wq/react": "^3.0.0-a1-dev1.g760eb56",
         "formik-mui": "^5.0.0-alpha.0",
-        "mui-file-dropzone": "^4.0.2"
+        "mui-file-dropzone": "^4.0.2",
+        "react-map-gl": "^8.0.1"
     },
     "devDependencies": {
-        "@wq/model": "^2.1.0",
-        "@wq/store": "^2.0.0",
         "react": "^18.2.0",
         "react-dom": "^18.2.0"
     }

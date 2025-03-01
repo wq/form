@@ -1,8 +1,9 @@
 import React from "react";
+import { withWQ } from "@wq/react";
 import { Form } from "formik";
 import PropTypes from "prop-types";
 
-export default function FormRoot({ children }) {
+function FormRoot({ children }) {
     return (
         <div style={{ flex: 1, display: "flex", justifyContent: "center" }}>
             <Form
@@ -22,3 +23,5 @@ export default function FormRoot({ children }) {
 FormRoot.propTypes = {
     children: PropTypes.node,
 };
+
+export default withWQ(FormRoot);

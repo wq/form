@@ -1,8 +1,14 @@
 import React from "react";
-import { useComponents } from "@wq/react";
+import { withWQ, useComponents, createFallbackComponent } from "@wq/react";
 import { useFormikContext } from "formik";
 
-export default function SubmitButton(props) {
+const SubmitButtonFallback = {
+    components: {
+        Button: createFallbackComponent("Button", "@wq/material"),
+    },
+};
+
+function SubmitButton(props) {
     const { Button } = useComponents(),
         { isSubmitting, submitForm } = useFormikContext();
 
@@ -15,3 +21,5 @@ export default function SubmitButton(props) {
         />
     );
 }
+
+export default withWQ(SubmitButton, { fallback: SubmitButtonFallback });

@@ -1,11 +1,12 @@
 import React from "react";
+import { withWQ } from "@wq/react";
 import { View } from "react-native";
 import { RadioButton, List } from "react-native-paper";
 import HelperText from "./HelperText.js";
 import { useField } from "formik";
 import PropTypes from "prop-types";
 
-export default function Radio({ name, choices, label, hint }) {
+function Radio({ name, choices, label, hint }) {
     const [, { value }, { setValue }] = useField(name);
     return (
         <View>
@@ -30,3 +31,5 @@ Radio.propTypes = {
     hint: PropTypes.string,
     choices: PropTypes.arrayOf(PropTypes.object),
 };
+
+export default withWQ(Radio);

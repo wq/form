@@ -1,4 +1,5 @@
 import React from "react";
+import { withWQ } from "@wq/react";
 import RNPickerSelect from "react-native-picker-select";
 import { View } from "react-native";
 import { TextInput, useTheme } from "react-native-paper";
@@ -6,7 +7,7 @@ import { useField } from "formik";
 import HelperText from "./HelperText.js";
 import PropTypes from "prop-types";
 
-export default function Select({ name, choices, label, hint }) {
+function Select({ name, choices, label, hint }) {
     const theme = useTheme(),
         [, meta, helpers] = useField(name),
         { value } = meta,
@@ -56,3 +57,5 @@ Select.propTypes = {
     hint: PropTypes.string,
     choices: PropTypes.arrayOf(PropTypes.object),
 };
+
+export default withWQ(Select);

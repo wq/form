@@ -1,8 +1,9 @@
 import React from "react";
 import { Card, Typography, CardContent } from "@mui/material";
+import { withWQ } from "@wq/react";
 import PropTypes from "prop-types";
 
-export default function Fieldset({ label, children }) {
+function Fieldset({ label, children }) {
     return (
         <Card sx={{ mb: 2 }}>
             <CardContent>
@@ -19,3 +20,5 @@ Fieldset.propTypes = {
     label: PropTypes.string,
     children: PropTypes.node,
 };
+
+export default withWQ(Fieldset);

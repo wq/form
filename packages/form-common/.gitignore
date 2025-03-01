@@ -1,16 +1,5 @@
-/react.js
 /index.js
-/index.native.js
-/index.expo.js
-/App.js
-/Root.js
+/date-utils.js
 /hooks.js
-/icons.js
-/init.js
-/messages.js
-/validate.js
 /components/
-/inputs/
-/views/
-/vendor/
 /__tests__/

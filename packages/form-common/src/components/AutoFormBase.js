@@ -1,8 +1,42 @@
 import React from "react";
-import { useComponents } from "../hooks.js";
+import { useField } from "formik";
+import { useComponents, withWQ, createFallbackComponent } from "@wq/react";
+import AutoInput from "./AutoInput.js";
+import Form from "./Form.js";
+import CancelButton from "./CancelButton.js";
+import { initFormData } from "../hooks.js";
 import PropTypes from "prop-types";
 
-export default function AutoForm({
+const AutoFormBaseDefaults = {
+        components: {
+            AutoInput,
+            Form,
+            CancelButton,
+        },
+    },
+    AutoFormBaseFallback = {
+        components: {
+            FormError() {
+                const [, { error }] = useField("__other__");
+                if (!error) {
+                    return null;
+                }
+                return error;
+            },
+            SubmitButton: createFallbackComponent(
+                "SubmitButton",
+                "@wq/form",
+                "AutoForm"
+            ),
+            View: createFallbackComponent("View", "@wq/material"),
+            HorizontalView: createFallbackComponent(
+                "HorizontalView",
+                "@wq/material"
+            ),
+        },
+    };
+
+function AutoFormBase({
     action,
     cancel,
     method,
@@ -18,7 +52,6 @@ export default function AutoForm({
     children,
 }) {
     const {
-        Message,
         AutoInput,
         Form,
         FormError,
@@ -28,7 +61,7 @@ export default function AutoForm({
         SubmitButton,
     } = useComponents();
 
-    const formData = initData(form, data);
+    const formData = initFormData(form, data);
 
     if (!modelConf) {
         modelConf = { form };
@@ -53,22 +86,14 @@ export default function AutoForm({
             ))}
             <FormError />
             <HorizontalView>
-                {cancel ? (
-                    <CancelButton to={cancel}>
-                        <Message id="CANCEL" />
-                    </CancelButton>
-                ) : (
-                    <View />
-                )}
-                <SubmitButton>
-                    <Message id="SUBMIT" />
-                </SubmitButton>
+                {cancel ? <CancelButton to={cancel} /> : <View />}
+                <SubmitButton />
             </HorizontalView>
         </Form>
     );
 }
 
-AutoForm.propTypes = {
+AutoFormBase.propTypes = {
     action: PropTypes.string,
     cancel: PropTypes.object,
     method: PropTypes.string,
@@ -84,69 +109,7 @@ AutoForm.propTypes = {
     children: PropTypes.node,
 };
 
-export function initData(form, data) {
-    if (!data) {
-        data = {};
-    }
-
-    const formData = {};
-
-    if (data.id) {
-        formData.id = data.id;
-    }
-
-    form.forEach((field) => {
-        let fieldName = field.name;
-        if (field["wq:ForeignKey"]) {
-            const naturalKey = field.name.match(/^([^\]]+)\[([^\]]+)\]$/);
-            if (
-                naturalKey &&
-                data[naturalKey[1]] &&
-                data[naturalKey[1]][naturalKey[2]]
-            ) {
-                fieldName = naturalKey[1];
-            } else {
-                fieldName = `${field.name}_id`;
-            }
-        }
-
-        let value;
-        if (field.type === "repeat") {
-            value = (data[fieldName] || []).map((row) =>
-                initData(field.children, row)
-            );
-        } else if (field.type === "group") {
-            if (fieldName) {
-                value = initData(field.children, data[fieldName] || {});
-            } else {
-                value = initData(field.children, data);
-            }
-        } else if (fieldName in data) {
-            value = data[fieldName];
-        } else {
-            value = defaultValue(field);
-        }
-
-        if (fieldName) {
-            formData[fieldName] = value;
-        } else {
-            Object.assign(formData, value);
-        }
-    });
-
-    return formData;
-
-    function defaultValue(field) {
-        if (field.type === "select") {
-            return [];
-        } else if (NULL_FIELDS.includes(field.type)) {
-            return null;
-        } else {
-            return "";
-        }
-    }
-}
-
-const NULL_FIELDS = ["date", "time", "dateTime", "int", "integer", "decimal"];
-
-AutoForm.initData = initData;
+export default withWQ(AutoFormBase, {
+    defaults: AutoFormBaseDefaults,
+    fallback: AutoFormBaseFallback,
+});

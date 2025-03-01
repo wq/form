@@ -1,11 +1,12 @@
 import React from "react";
+import { withWQ } from "@wq/react";
 import { View, Text } from "react-native";
 import { ToggleButton, List } from "react-native-paper";
 import HelperText from "./HelperText.js";
 import { useField } from "formik";
 import PropTypes from "prop-types";
 
-export default function Toggle({ name, choices, label, hint, style }) {
+function Toggle({ name, choices, label, hint, style }) {
     const [, { value }, { setValue }] = useField(name);
     return (
         <View>
@@ -36,3 +37,5 @@ Toggle.propTypes = {
     choices: PropTypes.arrayOf(PropTypes.object),
     style: PropTypes.object,
 };
+
+export default withWQ(Toggle);

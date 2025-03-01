@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import { withWQ } from "@wq/react";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { Text, View } from "react-native";
 import { TouchableRipple, TextInput } from "react-native-paper";
 import { useField } from "formik";
-import { format, parse } from "./date-utils.js";
+import { format, parse } from "@wq/form-common";
 import HelperText from "./HelperText.js";
 import PropTypes from "prop-types";
 
@@ -13,7 +14,7 @@ const displayFormat = {
     datetime: (value) => parse.datetime(value).toLocaleString(),
 };
 
-export default function DateTime({ name, type, label, hint }) {
+function DateTime({ name, type, label, hint }) {
     type = type.toLowerCase();
 
     const [, meta, helpers] = useField(name),
@@ -62,3 +63,5 @@ DateTime.propTypes = {
     label: PropTypes.string,
     hint: PropTypes.string,
 };
+
+export default withWQ(DateTime);

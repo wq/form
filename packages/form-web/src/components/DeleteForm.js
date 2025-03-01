@@ -1,13 +1,31 @@
 import React from "react";
-import { useComponents, useMessages } from "@wq/react";
+import {
+    useComponents,
+    useMessage,
+    withWQ,
+    createFallbackComponents,
+} from "@wq/react";
+import { Form } from "@wq/form-common";
+import SubmitButton from "./SubmitButton.js";
 import PropTypes from "prop-types";
 
-export default function DeleteForm({ action }) {
+const DeleteFormFallback = {
+    messages: {
+        CONFIRM_DELETE: "Are you sure you want to delete this record?",
+    },
+    components: {
+        Form,
+        SubmitButton,
+        ...createFallbackComponents(["View", "HorizontalView"], "@wq/material"),
+    },
+};
+
+function DeleteForm({ action }) {
     const { Form, SubmitButton, View, HorizontalView } = useComponents(),
-        { CONFIRM_DELETE } = useMessages();
+        message = useMessage("CONFIRM_DELETE");
 
     function confirmSubmit() {
-        return window.confirm(CONFIRM_DELETE);
+        return window.confirm(message);
     }
 
     return (
@@ -30,3 +48,5 @@ export default function DeleteForm({ action }) {
 DeleteForm.propTypes = {
     action: PropTypes.string,
 };
+
+export default withWQ(DeleteForm, { fallback: DeleteFormFallback });
