@@ -52,16 +52,8 @@
         "tabWidth": 4
     },
     "workspaces": [
-        "packages/store",
-        "packages/router",
-        "packages/model",
-        "packages/outbox",
-        "packages/app",
-        "packages/react",
-        "packages/material-web",
-        "packages/material",
-        "packages/map",
-        "packages/map-gl-web",
-        "packages/map-gl"
+        "packages/form-common",
+        "packages/form-web",
+        "packages/form"
     ]
 }
