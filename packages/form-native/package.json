@@ -28,8 +28,6 @@
     },
     "homepage": "https://wq.io/@wq/form",
     "dependencies": {
-        "@wq/map-gl-native": "^3.0.0-a1-dev5.g31f4b5c",
-        "@wq/material-native": "^3.0.0-a1-dev1.g760eb56",
         "@wq/react": "^3.0.0-a1-dev1.g760eb56"
     },
     "peerDependencies": {

@@ -1,8 +1,17 @@
 import { useRef, useEffect } from "react";
-import { withWQ } from "@wq/react";
-import { useControl } from "react-map-gl/maplibre";
+import { useComponents, withWQ, createFallbackComponent } from "@wq/react";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import PropTypes from "prop-types";
+
+const DrawFallback = {
+    components: {
+        useControl: createFallbackComponent(
+            "useControl",
+            "@wq/map-gl",
+            "MapProvider"
+        ),
+    },
+};
 
 function Draw({ type, required, data, setData }) {
     const types = type === "all" ? ["point", "line_string", "polygon"] : [type],
@@ -14,6 +23,7 @@ function Draw({ type, required, data, setData }) {
     if (!required) {
         controls.trash = true;
     }
+    const { useControl } = useComponents();
     const draw = useControl(
         () => {
             const { classes } = MapboxDraw.constants;
@@ -69,4 +79,4 @@ Draw.propTypes = {
     setData: PropTypes.func,
 };
 
-export default withWQ(Draw);
+export default withWQ(Draw, { fallback: DrawFallback });

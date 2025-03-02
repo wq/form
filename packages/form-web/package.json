@@ -35,11 +35,9 @@
         "@mui/icons-material": "^5.11.16",
         "@mui/material": "^5.13.5",
         "@wq/form-common": "*",
-        "@wq/map-gl-web": "^3.0.0-a1-dev5.g31f4b5c",
         "@wq/react": "^3.0.0-a1-dev1.g760eb56",
         "formik-mui": "^5.0.0-alpha.0",
-        "mui-file-dropzone": "^4.0.2",
-        "react-map-gl": "^8.0.1"
+        "mui-file-dropzone": "^4.0.2"
     },
     "devDependencies": {
         "react": "^18.2.0",

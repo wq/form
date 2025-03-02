@@ -17,8 +17,8 @@ const GeoLocateFallback = {
         Typography: createFallbackComponent("Typography", "@wq/material"),
         useGeolocation: createFallbackComponent(
             "useGeolocation",
-            "@wq/form",
-            "AutoForm"
+            "@wq/map-gl",
+            "MapProvider"
         ),
     },
 };

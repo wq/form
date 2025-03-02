@@ -1,5 +1,10 @@
 import React from "react";
-import { useComponents, withWQ, createFallbackComponents } from "@wq/react";
+import {
+    useComponents,
+    withWQ,
+    createFallbackComponent,
+    createFallbackComponents,
+} from "@wq/react";
 import { Fieldset } from "./AutoSubform.js";
 import GeoAccuracy from "./GeoAccuracy.js";
 import GeoTools from "./GeoTools.js";
@@ -23,8 +28,13 @@ const GeoInputDefault = {
     GeoInputFallback = {
         components: {
             Fieldset,
+            MapProvider: createFallbackComponent(
+                "MapProvider",
+                "@wq/map-gl",
+                "MapProvider"
+            ),
             ...createFallbackComponents(
-                ["MapProvider", "FlatFieldset", "HelperText", "Draw"],
+                ["FlatFieldset", "HelperText", "Draw"],
                 "@wq/form",
                 "AutoForm"
             ),

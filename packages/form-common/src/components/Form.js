@@ -22,6 +22,7 @@ function Form({
     preserve,
     modelConf,
     data = {},
+    csrftoken,
     error,
     children,
 }) {
@@ -58,6 +59,7 @@ function Form({
                 _method: method,
                 ...values,
             },
+            csrftoken,
         });
 
         if (error) {
@@ -99,6 +101,7 @@ Form.propTypes = {
     preserve: PropTypes.arrayOf(PropTypes.string),
     modelConf: PropTypes.object,
     data: PropTypes.object,
+    csrftoken: PropTypes.string,
     error: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     FormRoot: PropTypes.func,
     children: PropTypes.node,

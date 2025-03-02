@@ -65,16 +65,20 @@ export function useSelectInput(component) {
     return Component;
 }
 
-const ForeignKeyFallback = {
-    components: {
-        useModel: createFallbackComponent("useModel", "@wq/model"),
-        useUnsynced: createFallbackComponent("useUnsynced", "@wq/outbox"),
-        Select: createFallbackComponent("Select", "@wq/form"),
-        useChoices,
-        useFilteredChoices,
-        useSelectInput,
+const ForeignKeyDefaults = {
+        components: {
+            useChoices,
+            useFilteredChoices,
+            useSelectInput,
+        },
     },
-};
+    ForeignKeyFallback = {
+        components: {
+            useModel: createFallbackComponent("useModel", "@wq/model"),
+            useUnsynced: createFallbackComponent("useUnsynced", "@wq/outbox"),
+            Select: createFallbackComponent("Select", "@wq/form"),
+        },
+    };
 
 function ForeignKey({ filter, ...rest }) {
     if (filter) {
@@ -84,7 +88,10 @@ function ForeignKey({ filter, ...rest }) {
     }
 }
 
-export default withWQ(ForeignKey, { fallback: ForeignKeyFallback });
+export default withWQ(ForeignKey, {
+    defaults: ForeignKeyDefaults,
+    fallback: ForeignKeyFallback,
+});
 
 function FilteredForeignKey({
     ["wq:ForeignKey"]: modelName,
