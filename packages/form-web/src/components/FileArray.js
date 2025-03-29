@@ -1,12 +1,10 @@
 import React, { useMemo, useCallback, useRef } from "react";
 import { useComponents, withWQ } from "@wq/react";
 import { useField } from "formik";
-import * as MuiFileDropzone from "mui-file-dropzone";
+import { DropzoneArea } from "mui2-file-dropzone";
 import Fieldset from "./Fieldset.js";
 import HelperText from "./HelperText.js";
 import PropTypes from "prop-types";
-
-const { DropzoneArea } = MuiFileDropzone;
 
 const FileArrayFallback = {
     components: {

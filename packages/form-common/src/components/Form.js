@@ -4,11 +4,14 @@ import { Formik, Form as FormRoot } from "formik";
 import { useValidate } from "../hooks.js";
 import PropTypes from "prop-types";
 
+const submitForm = createFallbackComponent("useSubmitForm", "@wq/outbox");
 const FormFallback = {
     components: {
         FormRoot,
         useValidate,
-        useSubmitForm: createFallbackComponent("useSubmitForm", "@wq/outbox"),
+        useSubmitForm() {
+            return submitForm;
+        },
     },
 };
 
@@ -21,6 +24,7 @@ function Form({
     outboxId,
     preserve,
     modelConf,
+    postSaveNav,
     data = {},
     csrftoken,
     error,
@@ -60,6 +64,8 @@ function Form({
                 ...values,
             },
             csrftoken,
+            config: modelConf,
+            postSaveNav,
         });
 
         if (error) {
@@ -81,8 +87,15 @@ function Form({
             initialErrors={errors}
             initialTouched={errors}
             validate={(values) => validate(values, modelConf)}
-            validateOnBlur={true}
-            validateOnChange={false}
+            validateOnMount={
+                validate.onMount !== undefined ? validate.onMount : false
+            }
+            validateOnBlur={
+                validate.onBlur !== undefined ? validate.onBlur : true
+            }
+            validateOnChange={
+                validate.onChange !== undefined ? validate.onChange : false
+            }
             onSubmit={handleSubmit}
             enableReinitialize={true}
         >
@@ -100,6 +113,7 @@ Form.propTypes = {
     outboxId: PropTypes.number,
     preserve: PropTypes.arrayOf(PropTypes.string),
     modelConf: PropTypes.object,
+    postSaveNav: PropTypes.func,
     data: PropTypes.object,
     csrftoken: PropTypes.string,
     error: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),

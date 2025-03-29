@@ -41,12 +41,15 @@ function AutoFormBase({
     cancel,
     method,
     onSubmit,
+    hideSubmit,
     storage,
     backgroundSync,
     outboxId,
     form = [],
     modelConf,
+    postSaveNav,
     data,
+    csrftoken,
     error,
     FormRoot,
     children,
@@ -67,13 +70,19 @@ function AutoFormBase({
         modelConf = { form };
     }
 
+    if (hideSubmit && !onSubmit) {
+        onSubmit = () => false;
+    }
+
     return (
         <Form
             action={action}
             method={method}
             onSubmit={onSubmit}
             data={formData}
+            csrftoken={csrftoken}
             modelConf={modelConf}
+            postSaveNav={postSaveNav}
             error={error}
             storage={storage}
             backgroundSync={backgroundSync}
@@ -85,10 +94,12 @@ function AutoFormBase({
                 <AutoInput key={name} name={name} subform={subform} {...rest} />
             ))}
             <FormError />
-            <HorizontalView>
-                {cancel ? <CancelButton to={cancel} /> : <View />}
-                <SubmitButton />
-            </HorizontalView>
+            {(cancel || !hideSubmit) && (
+                <HorizontalView>
+                    {cancel ? <CancelButton to={cancel} /> : <View />}
+                    {hideSubmit ? <View /> : <SubmitButton />}
+                </HorizontalView>
+            )}
         </Form>
     );
 }
@@ -98,12 +109,15 @@ AutoFormBase.propTypes = {
     cancel: PropTypes.object,
     method: PropTypes.string,
     onSubmit: PropTypes.func,
+    hideSubmit: PropTypes.bool,
     storage: PropTypes.string,
     backgroundSync: PropTypes.bool,
     outboxId: PropTypes.number,
     form: PropTypes.arrayOf(PropTypes.object),
     modelConf: PropTypes.object,
+    postSaveNav: PropTypes.func,
     data: PropTypes.object,
+    csrftoken: PropTypes.string,
     error: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     FormRoot: PropTypes.func,
     children: PropTypes.node,

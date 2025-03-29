@@ -1,12 +1,10 @@
 import React, { useMemo, useCallback, useRef } from "react";
 import { withWQ } from "@wq/react";
 import { useField } from "formik";
-import * as MuiFileDropzone from "mui-file-dropzone";
+import { DropzoneArea } from "mui2-file-dropzone";
 import { InputLabel } from "@mui/material";
 import HelperText from "./HelperText.js";
 import PropTypes from "prop-types";
-
-const { DropzoneArea } = MuiFileDropzone;
 
 function File({ name, accept, hint, label }) {
     const [, { initialValue }, { setValue }] = useField(name),

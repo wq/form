@@ -13,9 +13,9 @@ const AutoInputDefaults = {
             AutoSubformArray,
             ForeignKey,
             Geo: GeoInput,
-            GeoPoint: GeoInput,
-            GeoTrace: GeoInput,
-            GeoShape: GeoInput,
+            Geopoint: GeoInput,
+            Geotrace: GeoInput,
+            Geoshape: GeoInput,
         },
     },
     AutoInputFallback = {
@@ -70,6 +70,8 @@ function AutoInput({ name, choices, type, bind = {}, ...rest }) {
         } else {
             inputType = "select";
         }
+    } else if (type === "text") {
+        inputType = "input";
     } else if (inputs[type]) {
         inputType = type;
     } else {
