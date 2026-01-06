@@ -9,7 +9,7 @@ export const format = {
 function tryFormat(value, options) {
     try {
         return formatISO9075(value, options);
-    } catch (e) {
+    } catch {
         return value;
     }
 }

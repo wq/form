@@ -8,7 +8,7 @@ const DrawFallback = {
         useMapInstance: createFallbackComponent(
             "useMapInstance",
             "@wq/form",
-            "AutoForm"
+            "AutoForm",
         ),
     },
 };

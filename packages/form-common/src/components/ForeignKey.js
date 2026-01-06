@@ -21,7 +21,7 @@ export function useChoices(modelName, group_by) {
                 label: record.label,
                 group: getGroup(record),
                 data: record,
-            }))
+            })),
         );
 }
 
@@ -37,7 +37,7 @@ export function useFilteredChoices(modelName, group_by, filterConf) {
     return choices.filter((choice) =>
         Object.entries(filter).every(([key, value]) => {
             return choice.data[key] == value;
-        })
+        }),
     );
 }
 

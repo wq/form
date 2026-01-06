@@ -1,32 +1,13 @@
-[![@wq/material][logo]][docs]
+[![@wq/form][logo]][docs]
 
-**@wq/material** provides a complete set of layout, navigation, and form components for use with the [@wq/react] renderer for [@wq/app].  @wq/material supports the [React] web environment as well as [React Native] and [Expo].  @wq/material provides a consistent API in all three environments, reducing the need for project-specific ".native.js" implementations.
+**@wq/form** provides a schema-based form layout library with bindings for the React web environment as well as as React Native / Expo.
+@wq/form provides a consistent API in both environments, reducing the need for project-specific ".native.js" implementations.
 
-The actual bindings for each environment are provided by [@wq/material-web][installation] and [@wq/material-native][installation], either or both of which should be installed in addition to @wq/material.
+The actual bindings for each environment are provided by [@wq/form-web] and [@wq/form-native], either or both of which should be installed in addition to @wq/form.
 
 ### [Documentation][docs]
 
-[**Installation**][installation]
-&bull;
-[**API**][api]
-&bull;
-[**Components**][components]
-&bull;
-[Icons][icons]
-&bull;
-[Inputs][inputs]
-
-[logo]: https://wq.io/images/@wq/material.svg
-[docs]: https://wq.io/@wq/material
-[installation]: https://wq.io/@wq/material#installation
-[api]: https://wq.io/@wq/material#api
-[components]: https://wq.io/components/
-[icons]: https://wq.io/icons
-[inputs]: https://wq.io/inputs/
-
-[@wq/app]: https://wq.io/@wq/app
-[@wq/react]: https://wq.io/@wq/react
-
-[React]: https://reactjs.org/
-[React Native]: https://reactnative.dev/
-[Expo]: https://expo.io/
+[logo]: https://wq.io/images/@wq/form.svg
+[docs]: https://form.wq.io/@wq/form
+[@wq/form-web]: https://form.wq.io/@wq/form-web
+[@wq/form-native]: https://form.wq.io/@wq/form-native

@@ -24,7 +24,7 @@ function Input(props) {
                 ? typeof value === "number"
                     ? "" + value
                     : ""
-                : value
+                : value,
         ),
         { setValue, setTouched } = helpers;
 
@@ -48,12 +48,12 @@ function Input(props) {
                 }
                 if (step) {
                     value = +(Math.round(value / step) * step).toFixed(
-                        step < 1 ? step.toString().split(".")[1].length : 0
+                        step < 1 ? step.toString().split(".")[1].length : 0,
                     );
                 }
                 setValue(value);
                 setFormatValue(
-                    +nextValue === value ? nextValue : value.toString()
+                    +nextValue === value ? nextValue : value.toString(),
                 );
             }
         } else {

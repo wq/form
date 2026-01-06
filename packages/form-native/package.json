@@ -1,6 +1,6 @@
 {
     "name": "@wq/form-native",
-    "version": "2.1.0",
+    "version": "3.0.0-alpha.0",
     "description": "React Native and Expo bindings for @wq/material",
     "type": "module",
     "main": "src/index.js",
@@ -26,9 +26,10 @@
     "bugs": {
         "url": "https://github.com/wq/form/issues"
     },
-    "homepage": "https://wq.io/@wq/form",
+    "homepage": "https://form.wq.io/@wq/form-native",
     "dependencies": {
-        "@wq/react": "^3.0.0-a1-dev1.g760eb56"
+        "@wq/form-common": "^3.0.0-alpha.0",
+        "@wq/react": "^3.0.0-alpha.0"
     },
     "peerDependencies": {
         "expo-application": "*",
@@ -39,12 +40,12 @@
         "react-native-picker-select": "*"
     },
     "devDependencies": {
-        "expo-application": "^5.9.1",
-        "expo-document-picker": "^12.0.2",
-        "expo-image-picker": "^15.0.7",
-        "jest-expo": "^52.0.5",
-        "react-native-modal-datetime-picker": "^17.1.0",
-        "react-native-paper": "^5.12.5",
+        "expo-application": "^7.0.8",
+        "expo-document-picker": "^14.0.8",
+        "expo-image-picker": "^17.0.10",
+        "jest-expo": "^52.0.6",
+        "react-native-modal-datetime-picker": "^18.0.0",
+        "react-native-paper": "^5.14.5",
         "react-native-picker-select": "^9.3.1"
     }
 }

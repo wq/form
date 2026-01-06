@@ -21,7 +21,7 @@ function File({ name, accept, hint, label }) {
         }, [initialValue]),
         acceptedFiles = useMemo(
             () => (accept ? accept.split(",") : null),
-            [accept]
+            [accept],
         ),
         setFile = useCallback(
             (files) => {
@@ -45,7 +45,7 @@ function File({ name, accept, hint, label }) {
                     setValue(null);
                 }
             },
-            [initialValue]
+            [initialValue],
         );
 
     return (

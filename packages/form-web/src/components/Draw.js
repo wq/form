@@ -8,7 +8,7 @@ const DrawFallback = {
         useControl: createFallbackComponent(
             "useControl",
             "@wq/map-gl",
-            "MapProvider"
+            "MapProvider",
         ),
     },
 };
@@ -51,7 +51,7 @@ function Draw({ type, required, data, setData }) {
             map.off("draw.combine", handleChange);
             map.off("draw.uncombine", handleChange);
         },
-        { position: "top-right" }
+        { position: "top-right" },
     );
 
     useEffect(() => {

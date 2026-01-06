@@ -1,29 +1,12 @@
-[![@wq/material][logo]][docs]
+[![@wq/form][logo]][docs]
 
-**@wq/material-native** provides [React Native] and [Expo] bindings for [@wq/material], via the [React Native Paper] library.
+**@wq/form-native** provides [React Native] and [Expo] bindings for [@wq/form], via the [React Native Paper] library.
 
 ### [Documentation][docs]
 
-[**Installation**][installation]
-&bull;
-[**API**][api]
-&bull;
-[**Components**][components]
-&bull;
-[Icons][icons]
-&bull;
-[Inputs][inputs]
-
-[logo]: https://wq.io/images/@wq/material.svg
-[docs]: https://wq.io/@wq/material
-[installation]: https://wq.io/@wq/material#installation
-[api]: https://wq.io/@wq/material#api
-[components]: https://wq.io/components/
-[icons]: https://wq.io/icons
-[inputs]: https://wq.io/inputs/
-
-[@wq/material]: https://wq.io/@wq/material
-[React]: https://reactjs.org/
+[logo]: https://wq.io/images/@wq/form.svg
+[docs]: https://form.wq.io/@wq/form-native
+[@wq/form]: https://form.wq.io/
 [React Native]: https://reactnative.dev/
-[Expo]: https://expo.io/
+[Expo]: https://expo.dev/
 [React Native Paper]: https://callstack.github.io/react-native-paper/

@@ -60,7 +60,7 @@ export function initFormData(form, data) {
         let value;
         if (field.type === "repeat") {
             value = (data[fieldName] || []).map((row) =>
-                initFormData(field.children, row)
+                initFormData(field.children, row),
             );
         } else if (field.type === "group") {
             if (fieldName) {
@@ -147,7 +147,7 @@ function validateRequired(values, form, labels = null) {
             }
         } else if (value && field.type === "repeat") {
             const nestedErrors = value.map((row) =>
-                validateRequired(row, field.children, labels)
+                validateRequired(row, field.children, labels),
             );
             if (nestedErrors.some((row) => row)) {
                 errors[name] = nestedErrors;
@@ -156,13 +156,13 @@ function validateRequired(values, form, labels = null) {
             if (name === "") {
                 Object.assign(
                     errors,
-                    validateRequired(values, field.children, labels)
+                    validateRequired(values, field.children, labels),
                 );
             } else if (value) {
                 const nestedErrors = validateRequired(
                     value,
                     field.children,
-                    labels
+                    labels,
                 );
                 if (nestedErrors) {
                     errors[name] = nestedErrors;

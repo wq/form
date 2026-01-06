@@ -15,7 +15,7 @@ const FileArrayFallback = {
 function FileArray({ name, label, subform, hint, maxRows }) {
     const [, { initialValue = [] }, { setValue }] = useField(name),
         fileField = subform.find(
-            (field) => field.type === "file" || field.type === "image"
+            (field) => field.type === "file" || field.type === "image",
         ) || {
             name: "file",
             type: "file",
@@ -49,7 +49,7 @@ function FileArray({ name, label, subform, hint, maxRows }) {
         }, [initialValue]),
         acceptedFiles = useMemo(
             () => (accept ? accept.split(",") : null),
-            [accept]
+            [accept],
         ),
         setFiles = useCallback(
             (files) => {
@@ -97,7 +97,7 @@ function FileArray({ name, label, subform, hint, maxRows }) {
                 }
                 setValue(nextValue);
             },
-            [initialValue]
+            [initialValue],
         );
 
     return (

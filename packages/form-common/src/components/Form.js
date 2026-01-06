@@ -40,7 +40,7 @@ function Form({
 
     async function handleSubmit(
         values,
-        { setSubmitting, setTouched, setErrors }
+        { setSubmitting, setTouched, setErrors },
     ) {
         if (onSubmit) {
             const result = await onSubmit(values);
@@ -138,7 +138,7 @@ function parseApiError(error, values) {
             if (Array.isArray(error)) {
                 if (typeof error[0] === "object") {
                     errors[key] = error.map((err, i) =>
-                        parseApiError(err, (values[key] || [])[i] || {})
+                        parseApiError(err, (values[key] || [])[i] || {}),
                     );
                     return;
                 }

@@ -1,6 +1,6 @@
 {
     "name": "@wq/form-web",
-    "version": "2.1.0",
+    "version": "3.0.0-alpha.0",
     "description": "Web bindings for @wq/form",
     "type": "module",
     "main": "index.js",
@@ -27,31 +27,21 @@
     "bugs": {
         "url": "https://github.com/wq/form/issues"
     },
-    "homepage": "https://wq.io/@wq/form",
+    "homepage": "https://form.wq.io/@wq/form-web",
     "dependencies": {
-        "@wq/form-common": "*",
-        "@wq/react": "^3.0.0-a1-dev4.g2569553"
+        "@wq/form-common": "^3.0.0-alpha.0",
+        "@wq/react": "^3.0.0-alpha.0"
     },
     "peerDependencies": {
-        "@emotion/react": "*",
-        "@emotion/styled": "*",
         "@mapbox/mapbox-gl-draw": "*",
-        "@mui/icons-material": "*",
         "@mui/material": "*",
         "formik-mui": "*",
-        "mui2-file-dropzone": "*",
-        "react": "*",
-        "react-dom": "*"
+        "mui2-file-dropzone": "*"
     },
     "devDependencies": {
-        "@emotion/react": "^11.14.0",
-        "@emotion/styled": "^11.14.0",
-        "@mapbox/mapbox-gl-draw": "^1.5.0",
-        "@mui/icons-material": "^6.4.8",
-        "@mui/material": "^6.4.8",
-        "formik-mui": "^5.0.0-alpha.0",
-        "mui2-file-dropzone": "^6.3.0",
-        "react": "^19.0.0",
-        "react-dom": "^19.0.0"
+        "@mapbox/mapbox-gl-draw": "^1.5.1",
+        "@mui/material": "^6.5.0",
+        "formik-mui": "^5.0.0-alpha.1",
+        "mui2-file-dropzone": "^6.3.0"
     }
 }

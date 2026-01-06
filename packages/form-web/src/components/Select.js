@@ -82,7 +82,7 @@ function Select({
                           />
                       </MenuItem>
                   ),
-        [native, multiple, fieldName]
+        [native, multiple, fieldName],
     );
 
     const renderChoices = (choices) =>
@@ -101,7 +101,7 @@ function Select({
                       </optgroup>
                   ) : (
                       <>{renderChoices(choices)}</>
-                  )
+                  ),
               )
         : (choiceGroups) => {
               const flattened = [];
@@ -110,7 +110,7 @@ function Select({
                       flattened.push(
                           <ListSubheader style={{ backgroundColor: "white" }}>
                               {group}
-                          </ListSubheader>
+                          </ListSubheader>,
                       );
                   }
                   flattened.push(...renderChoices(choices));

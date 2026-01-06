@@ -36,8 +36,8 @@ function File({ name, accept, capture, required, label, hint }) {
     const modes = capture
         ? [takePhoto]
         : acceptImage
-        ? [takePhoto, pickFile]
-        : [pickFile];
+          ? [takePhoto, pickFile]
+          : [pickFile];
 
     if (value && !required) {
         modes.push(clear);
@@ -80,10 +80,10 @@ function File({ name, accept, capture, required, label, hint }) {
                             {value
                                 ? "Change"
                                 : capture
-                                ? "Add Photo"
-                                : acceptImage
-                                ? "Add Image"
-                                : "Add File"}
+                                  ? "Add Photo"
+                                  : acceptImage
+                                    ? "Add Image"
+                                    : "Add File"}
                         </Button>
                     }
                 >
@@ -127,7 +127,7 @@ export default withWQ(File, { fallback: FileFallback });
 function isImage(value) {
     if (typeof value === "string") {
         return IMAGE_EXTENSIONS.some((ext) =>
-            value.toLowerCase().endsWith(ext)
+            value.toLowerCase().endsWith(ext),
         );
     } else {
         return (

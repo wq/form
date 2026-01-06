@@ -1,12 +1,12 @@
 import React, { Fragment } from "react";
 import { useComponents, withWQ, createFallbackComponent } from "@wq/react";
 import PropTypes from "prop-types";
-import { pascalCase } from "pascal-case";
+import { pascalCase } from "change-case";
 
 export const Fieldset = createFallbackComponent(
     "Fieldset",
     "@wq/form",
-    "AutoForm"
+    "AutoForm",
 );
 
 const AutoSubformFallback = {
@@ -15,7 +15,7 @@ const AutoSubformFallback = {
         AutoInput: createFallbackComponent(
             "AutoInput",
             "@wq/form",
-            "AutoForm or AutoFormBase"
+            "AutoForm or AutoFormBase",
         ),
         Fieldset,
     },

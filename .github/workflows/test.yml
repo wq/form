@@ -5,29 +5,29 @@ on: [push, pull_request]
 jobs:
   npm:
     name: "@wq/${{ matrix.package }}"
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     env:
       PACKAGE: ${{ matrix.package }}
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.10"]
-        node-version: [18]
+        python-version: ["3.14"]
+        node-version: [24]
         package:
           - form-common
           - form
           - form-web
           - form-native
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v6
       with:
         fetch-depth: 0
     - name: Set up Node ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v6
       with:
         node-version: ${{ matrix.node-version }}
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
@@ -64,4 +64,4 @@ jobs:
          echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> .npmrc
          cp .npmrc packages/$PACKAGE/.npmrc  # for native builds
          cd packages/$PACKAGE
-         npm publish
+         npm publish --tag latest

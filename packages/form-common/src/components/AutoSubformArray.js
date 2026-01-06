@@ -4,7 +4,7 @@ import { FieldArray, getIn } from "formik";
 import PropTypes from "prop-types";
 import AutoSubform from "./AutoSubform.js";
 import { initFormData } from "../hooks.js";
-import { pascalCase } from "pascal-case";
+import { pascalCase } from "change-case";
 
 const AutoSubformArrayFallback = {
     components: {
@@ -13,7 +13,7 @@ const AutoSubformArrayFallback = {
         ...createFallbackComponents(
             ["FieldsetArray", "FileArray"],
             "@wq/form",
-            "AutoForm"
+            "AutoForm",
         ),
     },
 };
@@ -90,7 +90,7 @@ function AutoSubformArray({ name, label, subform, ...rest }) {
                 </FieldsetArray>
             );
         },
-        [name, label, subform, FieldsetArray, AutoSubform]
+        [name, label, subform, FieldsetArray, AutoSubform],
     );
 
     SubformArray.displayName = "SubformArray";

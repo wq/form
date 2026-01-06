@@ -20,11 +20,11 @@ export function useZoomToLocation(mapId) {
                 });
             } else {
                 console.warn(
-                    `zoomToLocation not implemented for ${geometry.type}`
+                    `zoomToLocation not implemented for ${geometry.type}`,
                 );
             }
         },
-        [instance]
+        [instance],
     );
 }
 
@@ -61,7 +61,7 @@ export function useGeoTools(name, type, mapId) {
         toggleName = `${name}_method`,
         [, { value }, { setValue }] = useField(name),
         [, { value: accuracy }, { setValue: setAccuracy }] = useField(
-            `${name}_accuracy`
+            `${name}_accuracy`,
         ),
         [, { value: activeTool }, { setValue: setActiveTool }] =
             useField(toggleName);
@@ -100,7 +100,7 @@ export function useGeoTools(name, type, mapId) {
                 });
             }
         },
-        [zoomToLocation]
+        [zoomToLocation],
     );
 
     useEffect(() => {
@@ -130,7 +130,7 @@ export function useGeoTools(name, type, mapId) {
             value,
             accuracy,
         }),
-        [toggleName, tools, setLocation, ActiveTool, value, accuracy]
+        [toggleName, tools, setLocation, ActiveTool, value, accuracy],
     );
 }
 

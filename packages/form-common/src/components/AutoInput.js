@@ -5,7 +5,7 @@ import AutoSubformArray from "./AutoSubformArray.js";
 import ForeignKey from "./ForeignKey.js";
 import GeoInput from "./GeoInput.js";
 import PropTypes from "prop-types";
-import { pascalCase } from "pascal-case";
+import { pascalCase } from "change-case";
 
 const AutoInputDefaults = {
         components: {
@@ -34,7 +34,7 @@ const AutoInputDefaults = {
                     "Toggle",
                 ],
                 "@wq/form",
-                "AutoForm"
+                "AutoForm",
             ),
         },
     };

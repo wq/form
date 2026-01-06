@@ -26,12 +26,12 @@ const AutoFormBaseDefaults = {
             SubmitButton: createFallbackComponent(
                 "SubmitButton",
                 "@wq/form",
-                "AutoForm"
+                "AutoForm",
             ),
             View: createFallbackComponent("View", "@wq/material"),
             HorizontalView: createFallbackComponent(
                 "HorizontalView",
-                "@wq/material"
+                "@wq/material",
             ),
         },
     };

@@ -1,6 +1,6 @@
 {
     "name": "@wq/form-common",
-    "version": "2.2.0",
+    "version": "3.0.0-alpha.0",
     "description": "Schema-based form generation and validation",
     "type": "module",
     "main": "index.js",
@@ -27,13 +27,13 @@
     "bugs": {
         "url": "https://github.com/wq/form/issues"
     },
-    "homepage": "https://wq.io/@wq/form",
+    "homepage": "https://form.wq.io/@wq/form-common",
     "dependencies": {
-        "@turf/circle": "^7.2.0",
-        "@wq/map": "^3.0.0-a1-dev5.g31f4b5c",
-        "@wq/react": "^3.0.0-a1-dev1.g760eb56",
-        "date-fns": "^3.6.0",
-        "formik": "^2.4.2",
-        "pascal-case": "^3.1.2"
+        "@turf/circle": "^7.3.1",
+        "@wq/map": "^3.0.0-alpha.1",
+        "@wq/react": "^3.0.0-alpha.0",
+        "change-case": "^4.1.2",
+        "date-fns": "^4.1.0",
+        "formik": "^2.4.9"
     }
 }

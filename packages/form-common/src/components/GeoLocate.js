@@ -18,7 +18,7 @@ const GeoLocateFallback = {
         useGeolocation: createFallbackComponent(
             "useGeolocation",
             "@wq/map-gl",
-            "MapProvider"
+            "MapProvider",
         ),
     },
 };
@@ -131,10 +131,10 @@ function formatLoc(lat, lng, acc) {
             acc > 1000
                 ? " (~" + Math.round(acc / 1000) + "km)"
                 : acc > 1
-                ? " (~" + Math.round(acc) + "m)"
-                : acc
-                ? " (" + acc + "m)"
-                : "";
+                  ? " (~" + Math.round(acc) + "m)"
+                  : acc
+                    ? " (" + acc + "m)"
+                    : "";
     return `${latFmt} ${lngFmt}${accFmt}`;
 }
 

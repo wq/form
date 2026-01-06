@@ -56,7 +56,7 @@ function DeleteForm({ action }) {
                     onDismiss() {
                         resolve(false);
                     },
-                }
+                },
             );
         });
     }

@@ -1,6 +1,6 @@
 {
     "name": "@wq/form",
-    "version": "2.1.0",
+    "version": "3.0.0-alpha.0",
     "description": "Schema-driven Material UI + MapLibre forms for use with @wq/app",
     "type": "module",
     "main": "src/index.js",
@@ -29,8 +29,8 @@
     "bugs": {
         "url": "https://github.com/wq/form/issues"
     },
-    "homepage": "https://wq.io/@wq/form",
+    "homepage": "https://form.wq.io/@wq/form",
     "devDependencies": {
-        "@wq/form-web": "^2.1.0"
+        "@wq/form-web": "^3.0.0-alpha.0"
     }
 }

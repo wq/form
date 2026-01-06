@@ -31,12 +31,12 @@ const GeoInputDefault = {
             MapProvider: createFallbackComponent(
                 "MapProvider",
                 "@wq/map-gl",
-                "MapProvider"
+                "MapProvider",
             ),
             ...createFallbackComponents(
                 ["FlatFieldset", "HelperText", "Draw"],
                 "@wq/form",
-                "AutoForm"
+                "AutoForm",
             ),
         },
     };
@@ -63,7 +63,7 @@ function GeoInput({
         } = useComponents(),
         [, { value }, { setValue }] = useField(name),
         [, { value: accuracy }, { setValue: setAccuracy }] = useField(
-            `${name}_accuracy`
+            `${name}_accuracy`,
         ),
         maxGeometries = 1; // FIXME;
 
