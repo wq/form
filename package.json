@@ -30,6 +30,7 @@
     "workspaces": [
         "packages/form-common",
         "packages/form-web",
-        "packages/form"
+        "packages/form",
+        "docs"
     ]
 }
