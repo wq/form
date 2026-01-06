@@ -88,8 +88,6 @@ function GeoCoords({ name, value, type, setLocation }) {
     );
 }
 
-GeoCoords.toolLabel = "Lat/Lng";
-
 GeoCoords.propTypes = {
     name: PropTypes.str,
     value: PropTypes.object,
@@ -97,4 +95,6 @@ GeoCoords.propTypes = {
     setLocation: PropTypes.func,
 };
 
-export default withWQ(GeoCoords, { fallback: GeoCoordsFallback });
+const GeoCoordsWQ = withWQ(GeoCoords, { fallback: GeoCoordsFallback });
+GeoCoordsWQ.toolLabel = "Lat/Lng";
+export default GeoCoordsWQ;

@@ -76,12 +76,12 @@ function GeoCode({ name, type, setLocation }) {
     );
 }
 
-GeoCode.toolLabel = "Address";
-
 GeoCode.propTypes = {
     name: PropTypes.string,
     type: PropTypes.string,
     setLocation: PropTypes.func,
 };
 
-export default withWQ(GeoCode, { fallback: GeoCodeFallback });
+const GeoCodeWQ = withWQ(GeoCode, { fallback: GeoCodeFallback });
+GeoCodeWQ.toolLabel = "Address";
+export default GeoCodeWQ;

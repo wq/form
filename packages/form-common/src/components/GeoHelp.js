@@ -8,7 +8,7 @@ export const TYPE_MAP = {
     geoshape: "polygon",
 };
 
-const GeoHelpDefault = {
+const GeoHelpDefaults = {
         messages: {
             GEO_POINT_NEW: "Click the {POINT_ICON} tool to draw a new point.",
             GEO_POINT_EDIT:
@@ -61,15 +61,15 @@ function GeoHelp({ value, type }) {
     );
 }
 
-GeoHelp.toolLabel = false;
-GeoHelp.toolDefault = true;
-
 GeoHelp.propTypes = {
     value: PropTypes.object,
     type: PropTypes.string,
 };
 
-export default withWQ(GeoHelp, {
-    default: GeoHelpDefault,
+const GeoHelpWQ = withWQ(GeoHelp, {
+    defaults: GeoHelpDefaults,
     fallback: GeoHelpFallback,
 });
+GeoHelpWQ.toolLabel = false;
+GeoHelpWQ.toolDefault = true;
+export default GeoHelpWQ;

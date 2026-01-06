@@ -18,7 +18,7 @@ export const TYPE_MAP = {
     geoshape: "polygon",
 };
 
-const GeoInputDefault = {
+const GeoInputDefaults = {
         components: {
             AutoMap,
             GeoAccuracy,
@@ -119,6 +119,6 @@ GeoInput.propTypes = {
 const emptyContext = {};
 
 export default withWQ(GeoInput, {
-    default: GeoInputDefault,
+    defaults: GeoInputDefaults,
     fallback: GeoInputFallback,
 });

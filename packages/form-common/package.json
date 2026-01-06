@@ -1,6 +1,6 @@
 {
     "name": "@wq/form-common",
-    "version": "3.0.0-alpha.0",
+    "version": "3.0.0-alpha.1",
     "description": "Schema-based form generation and validation",
     "type": "module",
     "main": "index.js",

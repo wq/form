@@ -28,7 +28,7 @@ export function useZoomToLocation(mapId) {
     );
 }
 
-const GeoToolsDefault = {
+const GeoToolsDefaults = {
         components: {
             GeoHelp,
             GeoLocate,
@@ -52,7 +52,10 @@ export function useGeoTools(name, type, mapId) {
         tools = useMemo(() => {
             const tools = {};
             for (const [key, value] of Object.entries(components)) {
-                if (value.toolLabel || value.toolDefault) {
+                if (
+                    (value.toolLabel || value.toolDefault) &&
+                    !Object.values(tools).includes(value)
+                ) {
                     tools[key] = value;
                 }
             }
@@ -66,9 +69,9 @@ export function useGeoTools(name, type, mapId) {
         [, { value: activeTool }, { setValue: setActiveTool }] =
             useField(toggleName);
 
-    const [defaultTool, DefaultTool] =
-            Object.entries(tools).find(([, Tool]) => Tool.toolDefault) ||
-            (null, () => null),
+    const [defaultTool, DefaultTool] = Object.entries(tools).find(
+            ([, Tool]) => Tool.toolDefault,
+        ) || [null, () => null],
         ActiveTool = tools[activeTool] || DefaultTool;
 
     const setLocation = useCallback(
@@ -196,6 +199,6 @@ GeoTools.propTypes = {
 };
 
 export default withWQ(GeoTools, {
-    default: GeoToolsDefault,
+    defaults: GeoToolsDefaults,
     fallback: GeoToolsFallback,
 });

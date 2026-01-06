@@ -62,7 +62,27 @@ function GeoLocate({ type, setLocation, value, accuracy }) {
     }
 
     function onError(error) {
-        setGpsStatus(error.message);
+        let message;
+        if (error.message) {
+            message = error.message;
+        } else if (error.code) {
+            switch (error.code) {
+                case 1:
+                    message = "Permission denied";
+                    break;
+                case 2:
+                    message = "Position unavailable";
+                    break;
+                case 3:
+                    message = "Timeout expired";
+                    break;
+                default:
+                    message = `Error code ${error.code}`;
+            }
+        } else {
+            message = `Error: ${error}`;
+        }
+        setGpsStatus(message);
         stopGps();
     }
 
@@ -138,4 +158,6 @@ function formatLoc(lat, lng, acc) {
     return `${latFmt} ${lngFmt}${accFmt}`;
 }
 
-export default withWQ(GeoLocate, { fallback: GeoLocateFallback });
+const GeoLocateWQ = withWQ(GeoLocate, { fallback: GeoLocateFallback });
+GeoLocateWQ.toolLabel = "Current";
+export default GeoLocateWQ;
