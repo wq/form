@@ -6,6 +6,7 @@ import Form from "./Form.js";
 import CancelButton from "./CancelButton.js";
 import { initFormData } from "../hooks.js";
 import PropTypes from "prop-types";
+import { validate as defaultValidate } from "../hooks.js";
 
 const AutoFormBaseDefaults = {
         components: {
@@ -37,22 +38,18 @@ const AutoFormBaseDefaults = {
     };
 
 function AutoFormBase({
-    action,
-    cancel,
-    method,
-    onSubmit,
-    hideSubmit,
-    storage,
-    backgroundSync,
-    outboxId,
     form = [],
-    modelConf,
-    postSaveNav,
+    action,
+    method,
+    validate = defaultValidate,
+    onSubmit,
+    submitOptions,
     data,
-    csrftoken,
     error,
-    FormRoot,
     children,
+    cancel,
+    hideSubmit,
+    ...rest
 }) {
     const {
         AutoInput,
@@ -66,28 +63,20 @@ function AutoFormBase({
 
     const formData = initFormData(form, data);
 
-    if (!modelConf) {
-        modelConf = { form };
-    }
-
     if (hideSubmit && !onSubmit) {
-        onSubmit = () => false;
+        onSubmit = () => null;
     }
 
     return (
         <Form
             action={action}
             method={method}
+            validate={(data) => validate(data, form)}
             onSubmit={onSubmit}
+            submitOptions={submitOptions}
             data={formData}
-            csrftoken={csrftoken}
-            modelConf={modelConf}
-            postSaveNav={postSaveNav}
             error={error}
-            storage={storage}
-            backgroundSync={backgroundSync}
-            outboxId={outboxId}
-            FormRoot={FormRoot}
+            {...rest}
         >
             {children}
             {(form || []).map(({ name, children: subform, ...rest }) => (
@@ -105,22 +94,17 @@ function AutoFormBase({
 }
 
 AutoFormBase.propTypes = {
-    action: PropTypes.string,
-    cancel: PropTypes.object,
-    method: PropTypes.string,
-    onSubmit: PropTypes.func,
-    hideSubmit: PropTypes.bool,
-    storage: PropTypes.string,
-    backgroundSync: PropTypes.bool,
-    outboxId: PropTypes.number,
     form: PropTypes.arrayOf(PropTypes.object),
-    modelConf: PropTypes.object,
-    postSaveNav: PropTypes.func,
+    action: PropTypes.string,
+    method: PropTypes.string,
+    validate: PropTypes.func,
+    onSubmit: PropTypes.func,
+    submitOptions: PropTypes.object,
     data: PropTypes.object,
-    csrftoken: PropTypes.string,
     error: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    FormRoot: PropTypes.func,
     children: PropTypes.node,
+    cancel: PropTypes.object,
+    hideSubmit: PropTypes.bool,
 };
 
 export default withWQ(AutoFormBase, {

@@ -1,6 +1,6 @@
 {
     "name": "@wq/form-web",
-    "version": "3.0.0-alpha.0",
+    "version": "3.0.0-alpha.1",
     "description": "Web bindings for @wq/form",
     "type": "module",
     "main": "index.js",
@@ -29,7 +29,7 @@
     },
     "homepage": "https://form.wq.io/@wq/form-web",
     "dependencies": {
-        "@wq/form-common": "^3.0.0-alpha.0",
+        "@wq/form-common": "^3.0.0-alpha.2",
         "@wq/react": "^3.0.0-alpha.0"
     },
     "peerDependencies": {

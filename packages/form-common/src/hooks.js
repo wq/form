@@ -96,13 +96,9 @@ export function initFormData(form, data) {
 
 const NULL_FIELDS = ["date", "time", "dateTime", "int", "integer", "decimal"];
 
-export function useValidate() {
-    return validate;
-}
-
-export function validate(values, modelConf) {
+export function validate(values, form) {
     const labels = [],
-        errors = validateRequired(values, modelConf && modelConf.form, labels);
+        errors = validateRequired(values, form, labels);
 
     if (errors && labels.length) {
         errors["__other__"] =

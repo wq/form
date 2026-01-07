@@ -1,82 +1,51 @@
 import React from "react";
-import { useComponents, withWQ, createFallbackComponent } from "@wq/react";
+import { useComponents, withWQ } from "@wq/react";
 import { Formik, Form as FormRoot } from "formik";
-import { useValidate } from "../hooks.js";
 import PropTypes from "prop-types";
 
-const submitForm = createFallbackComponent("useSubmitForm", "@wq/outbox");
-const FormFallback = {
-    components: {
-        FormRoot,
-        useValidate,
-        useSubmitForm() {
-            return submitForm;
-        },
-    },
-};
+const FormFallback = { components: { FormRoot } };
 
 function Form({
     action,
     method,
+    validate = () => null,
     onSubmit,
-    storage,
-    backgroundSync,
-    outboxId,
-    preserve,
-    modelConf,
-    postSaveNav,
+    submitOptions,
     data = {},
-    csrftoken,
     error,
     children,
+    ...rest
 }) {
-    const { FormRoot, useValidate, useSubmitForm } = useComponents(),
-        validate = useValidate(),
-        submitForm = useSubmitForm();
-
-    if (backgroundSync === undefined) {
-        backgroundSync = false;
-    }
+    const { FormRoot } = useComponents();
 
     async function handleSubmit(
-        values,
+        data,
         { setSubmitting, setTouched, setErrors },
     ) {
-        if (onSubmit) {
-            const result = await onSubmit(values);
-            if (!result) {
-                setSubmitting(false);
-                return;
+        const hasFiles = checkForFiles(data);
+        let result;
+        try {
+            result = await onSubmit({
+                action,
+                method,
+                data,
+                hasFiles,
+                submitOptions,
+            });
+        } catch (error) {
+            if (!error.detail) {
+                console.warn("Error in onSubmit", error);
             }
-        }
-
-        const has_files = checkForFiles(values);
-
-        const [item, error] = await submitForm({
-            url: action,
-            storage,
-            backgroundSync,
-            has_files,
-            outboxId,
-            preserve,
-            data: {
-                _method: method,
-                ...values,
-            },
-            csrftoken,
-            config: modelConf,
-            postSaveNav,
-        });
-
-        if (error) {
-            const errors = parseApiError(item.error, values);
+            const errors = parseApiError(
+                error.detail || error.message || `Error: ${error}`,
+                data,
+            );
             setErrors(errors);
             setTouched(errors, false);
+            result = { error };
         }
-
         setSubmitting(false);
-
-        return item;
+        return result;
     }
 
     const errors = parseApiError(error, data);
@@ -86,7 +55,7 @@ function Form({
             initialValues={data}
             initialErrors={errors}
             initialTouched={errors}
-            validate={(values) => validate(values, modelConf)}
+            validate={validate}
             validateOnMount={
                 validate.onMount !== undefined ? validate.onMount : false
             }
@@ -98,6 +67,7 @@ function Form({
             }
             onSubmit={handleSubmit}
             enableReinitialize={true}
+            {...rest}
         >
             <FormRoot>{children}</FormRoot>
         </Formik>
@@ -107,17 +77,11 @@ function Form({
 Form.propTypes = {
     action: PropTypes.string,
     method: PropTypes.string,
+    validate: PropTypes.func,
     onSubmit: PropTypes.func,
-    storage: PropTypes.string,
-    backgroundSync: PropTypes.bool,
-    outboxId: PropTypes.number,
-    preserve: PropTypes.arrayOf(PropTypes.string),
-    modelConf: PropTypes.object,
-    postSaveNav: PropTypes.func,
+    submitOptions: PropTypes.object,
     data: PropTypes.object,
-    csrftoken: PropTypes.string,
     error: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
-    FormRoot: PropTypes.func,
     children: PropTypes.node,
 };
 

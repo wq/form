@@ -75,7 +75,9 @@ const ForeignKeyDefaults = {
     ForeignKeyFallback = {
         components: {
             useModel: createFallbackComponent("useModel", "@wq/model"),
-            useUnsynced: createFallbackComponent("useUnsynced", "@wq/outbox"),
+            useUnsynced() {
+                return [];
+            },
             Select: createFallbackComponent("Select", "@wq/form"),
         },
     };

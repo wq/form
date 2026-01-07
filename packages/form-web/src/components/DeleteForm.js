@@ -20,20 +20,26 @@ const DeleteFormFallback = {
     },
 };
 
-function DeleteForm({ action }) {
+function DeleteForm({ action, onSubmit, submitOptions }) {
     const { Form, SubmitButton, View, HorizontalView } = useComponents(),
         message = useMessage("CONFIRM_DELETE");
 
-    function confirmSubmit() {
-        return window.confirm(message);
+    function confirmSubmit(options) {
+        if (window.confirm(message)) {
+            if (onSubmit) {
+                return onSubmit(options);
+            } else {
+                console.error("No onSubmit handler provided to DeleteForm");
+            }
+        }
     }
 
     return (
         <Form
             action={action}
             method="DELETE"
-            backgroundSync={false}
             onSubmit={confirmSubmit}
+            submitOptions={submitOptions}
         >
             <HorizontalView>
                 <View />
@@ -47,6 +53,8 @@ function DeleteForm({ action }) {
 
 DeleteForm.propTypes = {
     action: PropTypes.string,
+    onSubmit: PropTypes.func.isRequired,
+    submitOptions: PropTypes.object,
 };
 
 export default withWQ(DeleteForm, { fallback: DeleteFormFallback });

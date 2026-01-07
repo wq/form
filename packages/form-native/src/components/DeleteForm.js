@@ -24,49 +24,53 @@ const DeleteFormFallback = {
     },
 };
 
-function DeleteForm({ action }) {
+function DeleteForm({ action, onSubmit, submitOptions }) {
     const { Form, SubmitButton, View, HorizontalView } = useComponents(),
         confirmDelete = useMessage("CONFIRM_DELETE"),
         confirmDeleteTitle = useMessage("CONFIRM_DELETE_TITLE"),
         confirmDeleteOk = useMessage("CONFIRM_DELETE_OK"),
         confirmDeleteCancel = useMessage("CONFIRM_DELETE_CANCEL");
 
-    async function confirmSubmit() {
-        return new Promise((resolve) => {
-            Alert.alert(
-                confirmDeleteTitle,
-                confirmDelete,
-                [
-                    {
-                        text: confirmDeleteCancel,
-                        onPress() {
-                            resolve(false);
-                        },
-                        style: "cancel",
-                    },
-                    {
-                        text: confirmDeleteOk,
-                        onPress() {
-                            resolve(true);
-                        },
-                        style: "destructive",
-                    },
-                ],
+    async function confirmSubmit(options) {
+        Alert.alert(
+            confirmDeleteTitle,
+            confirmDelete,
+            [
                 {
-                    onDismiss() {
-                        resolve(false);
+                    text: confirmDeleteCancel,
+                    onPress() {
+                        // noop
                     },
+                    style: "cancel",
                 },
-            );
-        });
+                {
+                    text: confirmDeleteOk,
+                    onPress() {
+                        if (onSubmit) {
+                            onSubmit(options);
+                        } else {
+                            console.error(
+                                "No onSubmit handler provided to DeleteForm",
+                            );
+                        }
+                    },
+                    style: "destructive",
+                },
+            ],
+            {
+                onDismiss() {
+                    // noop
+                },
+            },
+        );
     }
 
     return (
         <Form
             action={action}
             method="DELETE"
-            backgroundSync={false}
             onSubmit={confirmSubmit}
+            submitOptions={submitOptions}
         >
             <HorizontalView>
                 <View />
@@ -80,6 +84,8 @@ function DeleteForm({ action }) {
 
 DeleteForm.propTypes = {
     action: PropTypes.string,
+    onSubmit: PropTypes.func.isRequired,
+    submitOptions: PropTypes.object,
 };
 
 export default withWQ(DeleteForm, { fallback: DeleteFormFallback });
