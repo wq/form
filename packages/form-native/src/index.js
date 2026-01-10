@@ -1,3 +1,4 @@
 import AutoForm from "./AutoForm.js";
-export { AutoForm };
+import FormProvider from "./FormProvider.js";
+export { AutoForm, FormProvider };
 export * from "./components/index.js";

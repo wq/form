@@ -1,5 +1,6 @@
-import { AutoForm } from "../index.js";
+import { AutoForm, FormProvider } from "../index.js";
 
 test("it loads", () => {
-    expect(AutoForm.displayName).toBe("AutoForm:wq");
+    expect(AutoForm.name).toBe("AutoForm");
+    expect(FormProvider.displayName).toBe("FormProvider:wq");
 });

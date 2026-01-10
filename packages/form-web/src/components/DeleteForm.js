@@ -6,6 +6,7 @@ import {
     createFallbackComponents,
 } from "@wq/react";
 import { Form } from "@wq/form-common";
+import FormContainer from "./FormContainer.js";
 import SubmitButton from "./SubmitButton.js";
 import PropTypes from "prop-types";
 
@@ -14,6 +15,7 @@ const DeleteFormFallback = {
         CONFIRM_DELETE: "Are you sure you want to delete this record?",
     },
     components: {
+        FormContainer,
         Form,
         SubmitButton,
         ...createFallbackComponents(["View", "HorizontalView"], "@wq/material"),
@@ -21,7 +23,8 @@ const DeleteFormFallback = {
 };
 
 function DeleteForm({ action, onSubmit, submitOptions }) {
-    const { Form, SubmitButton, View, HorizontalView } = useComponents(),
+    const { FormContainer, Form, SubmitButton, View, HorizontalView } =
+            useComponents(),
         message = useMessage("CONFIRM_DELETE");
 
     function confirmSubmit(options) {
@@ -35,19 +38,25 @@ function DeleteForm({ action, onSubmit, submitOptions }) {
     }
 
     return (
-        <Form
-            action={action}
-            method="DELETE"
-            onSubmit={confirmSubmit}
-            submitOptions={submitOptions}
-        >
-            <HorizontalView>
-                <View />
-                <SubmitButton icon="delete" variant="text" color="secondary">
-                    Delete
-                </SubmitButton>
-            </HorizontalView>
-        </Form>
+        <FormContainer>
+            <Form
+                action={action}
+                method="DELETE"
+                onSubmit={confirmSubmit}
+                submitOptions={submitOptions}
+            >
+                <HorizontalView>
+                    <View />
+                    <SubmitButton
+                        icon="delete"
+                        variant="text"
+                        color="secondary"
+                    >
+                        Delete
+                    </SubmitButton>
+                </HorizontalView>
+            </Form>
+        </FormContainer>
     );
 }
 

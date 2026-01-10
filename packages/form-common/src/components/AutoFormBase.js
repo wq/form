@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { useField } from "formik";
 import { useComponents, withWQ, createFallbackComponent } from "@wq/react";
 import AutoInput from "./AutoInput.js";
@@ -17,6 +17,7 @@ const AutoFormBaseDefaults = {
     },
     AutoFormBaseFallback = {
         components: {
+            FormContainer: Fragment,
             FormError() {
                 const [, { error }] = useField("__other__");
                 if (!error) {
@@ -52,6 +53,7 @@ function AutoFormBase({
     ...rest
 }) {
     const {
+        FormContainer,
         AutoInput,
         Form,
         FormError,
@@ -68,28 +70,35 @@ function AutoFormBase({
     }
 
     return (
-        <Form
-            action={action}
-            method={method}
-            validate={(data) => validate(data, form)}
-            onSubmit={onSubmit}
-            submitOptions={submitOptions}
-            data={formData}
-            error={error}
-            {...rest}
-        >
-            {children}
-            {(form || []).map(({ name, children: subform, ...rest }) => (
-                <AutoInput key={name} name={name} subform={subform} {...rest} />
-            ))}
-            <FormError />
-            {(cancel || !hideSubmit) && (
-                <HorizontalView>
-                    {cancel ? <CancelButton to={cancel} /> : <View />}
-                    {hideSubmit ? <View /> : <SubmitButton />}
-                </HorizontalView>
-            )}
-        </Form>
+        <FormContainer>
+            <Form
+                action={action}
+                method={method}
+                validate={(data) => validate(data, form)}
+                onSubmit={onSubmit}
+                submitOptions={submitOptions}
+                data={formData}
+                error={error}
+                {...rest}
+            >
+                {children}
+                {(form || []).map(({ name, children: subform, ...rest }) => (
+                    <AutoInput
+                        key={name}
+                        name={name}
+                        subform={subform}
+                        {...rest}
+                    />
+                ))}
+                <FormError />
+                {(cancel || !hideSubmit) && (
+                    <HorizontalView>
+                        {cancel ? <CancelButton to={cancel} /> : <View />}
+                        {hideSubmit ? <View /> : <SubmitButton />}
+                    </HorizontalView>
+                )}
+            </Form>
+        </FormContainer>
     );
 }
 

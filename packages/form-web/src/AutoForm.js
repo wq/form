@@ -1,17 +1,11 @@
 import React from "react";
-import { withWQ } from "@wq/react";
-import { AutoFormBase, AutoInput, Form, CancelButton } from "@wq/form-common";
-import * as components from "./components/index.js";
+import { AutoFormBase } from "@wq/form-common";
+import FormProvider from "./FormProvider.js";
 
-const AutoFormDefaults = {
-    components: { ...components, AutoForm, AutoInput, Form, CancelButton },
-};
-
-function AutoForm(props) {
-    if (!props.action && !props.onSubmit && !props.form) {
-        return props.children || null;
-    }
-    return <AutoFormBase {...props} />;
+export default function AutoForm(props) {
+    return (
+        <FormProvider>
+            <AutoFormBase {...props} />
+        </FormProvider>
+    );
 }
-
-export default withWQ(AutoForm, { defaults: AutoFormDefaults });

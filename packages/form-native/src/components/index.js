@@ -1,3 +1,4 @@
+import FormContainer from "./FormContainer.js";
 import FormRoot from "./FormRoot.js";
 import FormError from "./FormError.js";
 import Input from "./Input.js";
@@ -25,6 +26,7 @@ const Time = DateTime;
 const dateTime = DateTime;
 
 export {
+    FormContainer,
     FormRoot,
     FormError,
     Input,
