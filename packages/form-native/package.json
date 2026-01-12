@@ -1,6 +1,6 @@
 {
     "name": "@wq/form-native",
-    "version": "3.0.0-alpha.1",
+    "version": "3.0.0-alpha.2",
     "description": "React Native and Expo bindings for @wq/material",
     "type": "module",
     "main": "src/index.js",
@@ -28,7 +28,7 @@
     },
     "homepage": "https://form.wq.io/@wq/form-native",
     "dependencies": {
-        "@wq/form-common": "^3.0.0-alpha.2",
+        "@wq/form-common": "^3.0.0-alpha.3",
         "@wq/react": "^3.0.0-alpha.0"
     },
     "peerDependencies": {
