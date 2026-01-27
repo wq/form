@@ -13,6 +13,7 @@ const AutoFormBaseDefaults = {
             AutoInput,
             Form,
             CancelButton,
+            useField,
         },
     },
     AutoFormBaseFallback = {

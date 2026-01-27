@@ -1,3 +1,5 @@
+export { useField } from "formik";
+
 const HTML5_INPUT_TYPES = {
     // Map XForm field types to <input type>
     barcode: false,
